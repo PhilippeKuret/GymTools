@@ -1,4 +1,4 @@
-package com.example.philippe.gymtools;
+package com.example.philippe.gymtools.Tools;
 
 import java.text.DecimalFormat;
 

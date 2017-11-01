@@ -1,16 +1,16 @@
-package com.example.philippe.gymtools;
+package com.example.philippe.gymtools.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.StringDef;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.example.philippe.gymtools.R;
+import com.example.philippe.gymtools.Tools.MathTools;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,6 +32,9 @@ public class MainActivity extends AppCompatActivity
 
 	@BindView(R.id.weightOutputLabel)
 	TextView weightOutputLabel;
+
+	@BindView(R.id.WorkoutTimerActivityNavigation)
+	Button workoutTimerActivityNavigation;
 
     //1 = kilo, 2 = Lbs
     int weightType = 1;
@@ -90,5 +93,15 @@ public class MainActivity extends AppCompatActivity
                 return success;
             }
         });
+
+		workoutTimerActivityNavigation.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Intent intent = new Intent(MainActivity.this, WorkoutTimerActivity.class);
+				MainActivity.this.startActivity(intent);
+			}
+		});
     }
 }

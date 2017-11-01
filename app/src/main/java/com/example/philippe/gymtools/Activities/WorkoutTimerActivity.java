@@ -1,15 +1,19 @@
-package com.example.philippe.gymtools;
+package com.example.philippe.gymtools.Activities;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
+import com.example.philippe.gymtools.Fragments.CustomTimeDialogFragment;
+import com.example.philippe.gymtools.R;
 
 import java.util.concurrent.TimeUnit;
 
@@ -33,7 +37,7 @@ public class WorkoutTimerActivity extends AppCompatActivity
 	@BindView(R.id.WeightConvertNavigation)
 	Button weightConvertActivityNavigation;
 
-	final long RESTINSECONDS = 10;
+	final long RESTTIME = 60;
 
 	boolean isOnLoop = false;
 
@@ -44,7 +48,7 @@ public class WorkoutTimerActivity extends AppCompatActivity
 		setContentView(R.layout.activity_workout_timer);
 		ButterKnife.bind(this);
 
-		final CountDownTimer countDownTimer = new CountDownTimer(TimeUnit.SECONDS.toMillis(RESTINSECONDS), 1000)
+		final CountDownTimer countDownTimer = new CountDownTimer(TimeUnit.SECONDS.toMillis(RESTTIME), 1000)
 		{
 			@Override
 			public void onTick(long millisUntilFinished)
@@ -57,8 +61,9 @@ public class WorkoutTimerActivity extends AppCompatActivity
 			{
 				Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
+				//Vibrate 3 time for 1 second with 1 second interval
 				long[] pattern = {0, 1000, 1000, 1000, 1000, 1000};
-				// Vibrate for 1 second
+
 				v.vibrate(pattern, -1);
 				restTimer.setText("1:00");
 				if(isOnLoop)
@@ -110,6 +115,17 @@ public class WorkoutTimerActivity extends AppCompatActivity
 			{
 				Intent intent = new Intent(WorkoutTimerActivity.this, MainActivity.class);
 				WorkoutTimerActivity.this.startActivity(intent);
+			}
+		});
+
+		restTimer.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				FragmentManager fm = getSupportFragmentManager();
+				CustomTimeDialogFragment customTimeDialogFragment = CustomTimeDialogFragment.newInstance();
+				customTimeDialogFragment.show(fm, "fragment_custom_timer");
 			}
 		});
 	}

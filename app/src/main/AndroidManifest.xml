@@ -11,10 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:label="@string/title_activity_main">
         </activity>
-        <activity android:name=".WorkoutTimerActivity">
+        <activity android:name=".Activities.WorkoutTimerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
