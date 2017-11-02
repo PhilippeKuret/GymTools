@@ -11,16 +11,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.philippe.gymtools.Fragments.CustomTimeDialogFragment;
 import com.example.philippe.gymtools.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class WorkoutTimerActivity extends AppCompatActivity
+public class WorkoutTimerActivity extends AppCompatActivity implements CustomTimeDialogFragment.OnTimeSelectedListener
 {
 	@BindView(R.id.restTimer)
 	TextView restTimer;
@@ -37,7 +41,7 @@ public class WorkoutTimerActivity extends AppCompatActivity
 	@BindView(R.id.WeightConvertNavigation)
 	Button weightConvertActivityNavigation;
 
-	final long RESTTIME = 60;
+	private long RESTTIME = 60;
 
 	boolean isOnLoop = false;
 
@@ -128,5 +132,19 @@ public class WorkoutTimerActivity extends AppCompatActivity
 				customTimeDialogFragment.show(fm, "fragment_custom_timer");
 			}
 		});
+	}
+
+	@Override
+	public void onTimeSelected(String time)
+	{
+		restTimer.setText(time);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss");
+		try {
+			Date date = dateFormat.parse(time);
+			//TODO give value of time selected to Timer
+			//RESTTIME = date.getTime();
+			//Toast.makeText(this, String.valueOf(RESTTIME), Toast.LENGTH_LONG).show();
+		} catch (ParseException e) {
+		}
 	}
 }
