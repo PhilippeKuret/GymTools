@@ -2,6 +2,7 @@ package com.example.philippe.gymtools.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
@@ -54,6 +55,14 @@ public class WorkoutTimerActivity extends AppCompatActivity implements CustomTim
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_workout_timer);
 		ButterKnife.bind(this);
+
+		SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+		if(sharedPref.contains("userTime"))
+		{
+			mRestTime = sharedPref.getLong("userTime", 60000);
+		}
+
+		restTimer.setText(MilliToMinuteTimeInString(mRestTime));
 
 		//TODO Save users last rest time in app
 
@@ -115,6 +124,16 @@ public class WorkoutTimerActivity extends AppCompatActivity implements CustomTim
 				customTimeDialogFragment.show(fm, "fragment_custom_timer");
 			}
 		});
+	}
+
+	@Override
+	protected void onPause()
+	{
+		super.onPause();
+		SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.putLong("userTime", mRestTime);
+		editor.apply();
 	}
 
 	@Override
