@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,18 +12,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.philippe.gymtools.Fragments.CustomTimeDialogFragment;
 import com.example.philippe.gymtools.R;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.example.philippe.gymtools.Tools.MathTools.*;
 
 public class WorkoutTimerActivity extends AppCompatActivity implements CustomTimeDialogFragment.OnTimeSelectedListener
 {
@@ -41,9 +38,15 @@ public class WorkoutTimerActivity extends AppCompatActivity implements CustomTim
 	@BindView(R.id.WeightConvertNavigation)
 	Button weightConvertActivityNavigation;
 
-	private long RESTTIME = 60;
+	final private long mMinuteInMilli = 60000;
 
-	boolean isOnLoop = false;
+	final private long mSecondInMilli = 1000;
+
+	private long mRestTime = 60000;
+
+	private CountDownTimer mCountDownTimer;
+
+	private boolean mIsOnLoop = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -52,37 +55,16 @@ public class WorkoutTimerActivity extends AppCompatActivity implements CustomTim
 		setContentView(R.layout.activity_workout_timer);
 		ButterKnife.bind(this);
 
-		final CountDownTimer countDownTimer = new CountDownTimer(TimeUnit.SECONDS.toMillis(RESTTIME), 1000)
-		{
-			@Override
-			public void onTick(long millisUntilFinished)
-			{
-				restTimer.setText(String.valueOf(TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished)));
-			}
-
-			@Override
-			public void onFinish()
-			{
-				Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-
-				//Vibrate 3 time for 1 second with 1 second interval
-				long[] pattern = {0, 1000, 1000, 1000, 1000, 1000};
-
-				v.vibrate(pattern, -1);
-				restTimer.setText("1:00");
-				if(isOnLoop)
-				{
-					start();
-				}
-			}
-		};
+		//TODO Save users last rest time in app
 
 		startTimer.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View v)
 			{
-				countDownTimer.start();
+				mCountDownTimer = getCountDownTimer();
+				restTimer.setClickable(false);
+				mCountDownTimer.start();
 			}
 		});
 
@@ -91,8 +73,9 @@ public class WorkoutTimerActivity extends AppCompatActivity implements CustomTim
 			@Override
 			public void onClick(View v)
 			{
-				countDownTimer.cancel();
-				restTimer.setText("1:00");
+				mCountDownTimer.cancel();
+				restTimer.setClickable(true);
+				restTimer.setText(MilliToMinuteTimeInString(mRestTime));
 			}
 		});
 
@@ -103,11 +86,11 @@ public class WorkoutTimerActivity extends AppCompatActivity implements CustomTim
 			{
 				if(loopTimer.isChecked())
 				{
-					isOnLoop = true;
+					mIsOnLoop = true;
 				}
 				else
 				{
-					isOnLoop = false;
+					mIsOnLoop = false;
 				}
 			}
 		});
@@ -128,7 +111,7 @@ public class WorkoutTimerActivity extends AppCompatActivity implements CustomTim
 			public void onClick(View v)
 			{
 				FragmentManager fm = getSupportFragmentManager();
-				CustomTimeDialogFragment customTimeDialogFragment = CustomTimeDialogFragment.newInstance();
+				CustomTimeDialogFragment customTimeDialogFragment = CustomTimeDialogFragment.newInstance(mRestTime);
 				customTimeDialogFragment.show(fm, "fragment_custom_timer");
 			}
 		});
@@ -138,13 +121,52 @@ public class WorkoutTimerActivity extends AppCompatActivity implements CustomTim
 	public void onTimeSelected(String time)
 	{
 		restTimer.setText(time);
-		SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss");
-		try {
-			Date date = dateFormat.parse(time);
-			//TODO give value of time selected to Timer
-			//RESTTIME = date.getTime();
-			//Toast.makeText(this, String.valueOf(RESTTIME), Toast.LENGTH_LONG).show();
-		} catch (ParseException e) {
-		}
+		mRestTime = StringTimeMinuteToMilli(time);
+	}
+
+	@NonNull
+	private CountDownTimer getCountDownTimer()
+	{
+		return new CountDownTimer(mRestTime, 1000)
+		{
+			@Override
+			public void onTick(long millisUntilFinished)
+			{
+				long minuteLeft = 0;
+				if(millisUntilFinished >= mMinuteInMilli)
+				{
+					minuteLeft = millisUntilFinished/mMinuteInMilli;
+					millisUntilFinished = millisUntilFinished - (minuteLeft*mMinuteInMilli);
+				}
+
+				long secondLeft = millisUntilFinished/mSecondInMilli;
+
+				if(secondLeft < 10)
+				{
+					restTimer.setText(minuteLeft + ":0" + secondLeft);
+				}
+				else
+				{
+					restTimer.setText(minuteLeft + ":" + secondLeft);
+				}
+			}
+
+			@Override
+			public void onFinish()
+			{
+				Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+				//Vibrate 3 time for 1 second with 1 second interval
+				long[] pattern = {0, 1000, 1000, 1000, 1000, 1000};
+
+				v.vibrate(pattern, -1);
+				restTimer.setText(MilliToMinuteTimeInString(mRestTime));
+				restTimer.setClickable(true);
+				if(mIsOnLoop)
+				{
+					start();
+				}
+			}
+		};
 	}
 }

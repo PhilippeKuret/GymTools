@@ -10,10 +10,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.philippe.gymtools.R;
-import com.example.philippe.gymtools.Tools.MathTools;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.example.philippe.gymtools.Tools.MathTools.*;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -76,14 +77,13 @@ public class MainActivity extends AppCompatActivity
                 if(v.getText().length() != 0)
                 {
                     double userInput = Double.parseDouble(v.getText().toString());
-                    MathTools tools = new MathTools();
 					if(weightType == 1)
 					{
-						weightOutput.setText(String.valueOf(tools.KiloToLbs(userInput)));
+						weightOutput.setText(String.valueOf(KiloToLbs(userInput)));
 					}
 					else
 					{
-						weightOutput.setText(String.valueOf(tools.LbsToKilo(userInput)));
+						weightOutput.setText(String.valueOf(LbsToKilo(userInput)));
 					}
                     success = true;
                 } else {

@@ -1,6 +1,5 @@
 package com.example.philippe.gymtools.Fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -15,6 +14,8 @@ import com.example.philippe.gymtools.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.example.philippe.gymtools.Tools.MathTools.MilliToMinuteTimeInString;
 
 public class CustomTimeDialogFragment extends DialogFragment
 {
@@ -31,18 +32,25 @@ public class CustomTimeDialogFragment extends DialogFragment
 	@BindView(R.id.acceptTime)
 	Button acceptTime;
 
+	final private int mMinuteInMilli = 60000;
+
+	final private int mSecondInMilli = 1000;
+
+	private static long mRestTime;
+
 	public CustomTimeDialogFragment() {}
 
-	public static CustomTimeDialogFragment newInstance()
+	public static CustomTimeDialogFragment newInstance(long time)
 	{
+		mRestTime = time;
 		CustomTimeDialogFragment frag = new CustomTimeDialogFragment();
 		Bundle args = new Bundle();
 		frag.setArguments(args);
 		return frag;
 	}
 
-	public static interface OnTimeSelectedListener {
-		public abstract void onTimeSelected(String time);
+	public interface OnTimeSelectedListener {
+		void onTimeSelected(String time);
 	}
 
 	@Override
@@ -56,20 +64,30 @@ public class CustomTimeDialogFragment extends DialogFragment
 	{
 		ButterKnife.bind(this, view);
 
-		minuteNumberPicker.setMaxValue(59);
+		minuteNumberPicker.setMaxValue(2);
 		secondNumberPicker.setMaxValue(59);
 
 		minuteNumberPicker.setMinValue(0);
 		secondNumberPicker.setMinValue(0);
 
-		selectedTime.setText("00:00");
+		selectedTime.setText(MilliToMinuteTimeInString(mRestTime));
+
+		minuteNumberPicker.setValue((int) mRestTime/mMinuteInMilli);
+		secondNumberPicker.setValue((int) (mRestTime - minuteNumberPicker.getValue()*mMinuteInMilli)/mSecondInMilli);
 
 		minuteNumberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
 		{
 			@Override
 			public void onValueChange(NumberPicker picker, int oldVal, int newVal)
 			{
-				selectedTime.setText(newVal + ":" + secondNumberPicker.getValue());
+				if(secondNumberPicker.getValue() < 10)
+				{
+					selectedTime.setText(newVal + ":0" + secondNumberPicker.getValue());
+				}
+				else
+				{
+					selectedTime.setText(newVal + ":" + secondNumberPicker.getValue());
+				}
 			}
 		});
 
@@ -78,7 +96,14 @@ public class CustomTimeDialogFragment extends DialogFragment
 			@Override
 			public void onValueChange(NumberPicker picker, int oldVal, int newVal)
 			{
-				selectedTime.setText(minuteNumberPicker.getValue() + ":" + newVal);
+				if(newVal < 10)
+				{
+					selectedTime.setText(minuteNumberPicker.getValue() + ":0" + newVal);
+				}
+				else
+				{
+					selectedTime.setText(minuteNumberPicker.getValue() + ":" + newVal);
+				}
 			}
 		});
 
@@ -88,7 +113,7 @@ public class CustomTimeDialogFragment extends DialogFragment
 			public void onClick(View v)
 			{
 				OnTimeSelectedListener listener = (OnTimeSelectedListener) getActivity();
-				listener.onTimeSelected(minuteNumberPicker.getValue() + ":" + secondNumberPicker.getValue());
+				listener.onTimeSelected(selectedTime.getText().toString());
 				dismiss();
 			}
 		});
