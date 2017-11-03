@@ -64,8 +64,6 @@ public class WorkoutTimerActivity extends AppCompatActivity implements CustomTim
 
 		restTimer.setText(MilliToMinuteTimeInString(mRestTime));
 
-		//TODO Save users last rest time in app
-
 		startTimer.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
