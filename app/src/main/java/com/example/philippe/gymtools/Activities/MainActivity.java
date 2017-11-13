@@ -9,7 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.philippe.gymtools.Module.AppDatabase;
 import com.example.philippe.gymtools.R;
+import com.example.philippe.gymtools.Tools.DatabaseInitializer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,61 +49,51 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        weightTypeSwitch.setOnClickListener(new View.OnClickListener()
+        weightTypeSwitch.setOnClickListener(v ->
 		{
-            @Override
-            public void onClick(View v)
+			if(weightType == 1)
 			{
-                if(weightType == 1)
-                {
-                    weightType = 2;
-					weightInputLabel.setText("Lbs");
-					weightOutputLabel.setText("Kg");
+				weightType = 2;
+				weightInputLabel.setText("Lbs");
+				weightOutputLabel.setText("Kg");
 
-                }
-                else
-				{
-					weightType = 1;
-					weightInputLabel.setText("Kg");
-					weightOutputLabel.setText("Lbs");
-				}
-            }
-        });
-
-        weightInput.setOnEditorActionListener(new TextView.OnEditorActionListener()
-		{
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
-			{
-                boolean success = false;
-                if(v.getText().length() != 0)
-                {
-                    double userInput = Double.parseDouble(v.getText().toString());
-					if(weightType == 1)
-					{
-						weightOutput.setText(String.valueOf(KiloToLbs(userInput)));
-					}
-					else
-					{
-						weightOutput.setText(String.valueOf(LbsToKilo(userInput)));
-					}
-                    success = true;
-                } else {
-					weightOutput.setText("0.0");
-				}
-
-                return success;
-            }
-        });
-
-		workoutTimerActivityNavigation.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				Intent intent = new Intent(MainActivity.this, WorkoutTimerActivity.class);
-				MainActivity.this.startActivity(intent);
 			}
+			else
+			{
+				weightType = 1;
+				weightInputLabel.setText("Kg");
+				weightOutputLabel.setText("Lbs");
+			}
+		});
+
+        weightInput.setOnEditorActionListener((v, actionId, event) ->
+		{
+			boolean success = false;
+			if(v.getText().length() != 0)
+			{
+				double userInput = Double.parseDouble(v.getText().toString());
+				if(weightType == 1)
+				{
+					weightOutput.setText(String.valueOf(KiloToLbs(userInput)));
+				}
+				else
+				{
+					weightOutput.setText(String.valueOf(LbsToKilo(userInput)));
+				}
+				success = true;
+			}
+			else
+			{
+				weightOutput.setText("0.0");
+			}
+
+			return success;
+		});
+
+		workoutTimerActivityNavigation.setOnClickListener(v ->
+		{
+			Intent intent = new Intent(MainActivity.this, WorkoutTimerActivity.class);
+			MainActivity.this.startActivity(intent);
 		});
     }
 }
