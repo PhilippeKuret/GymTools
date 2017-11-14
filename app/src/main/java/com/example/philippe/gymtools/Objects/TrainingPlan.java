@@ -8,10 +8,15 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity(tableName = "training_plan", indices = {@Index(value = {"name"}, unique = true)})
 public class TrainingPlan
 {
-	public TrainingPlan(int id, String name)
+	public TrainingPlan()
+	{
+	}
+
+	public TrainingPlan(int id, String name, boolean isDisplayedPlan)
 	{
 		Id = id;
 		Name = name;
+		IsDisplayedPlan = isDisplayedPlan;
 	}
 
 	@PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id")
@@ -19,6 +24,9 @@ public class TrainingPlan
 
 	@ColumnInfo(name = "name")
 	private String Name;
+
+	@ColumnInfo(name = "is_displayed")
+	private boolean IsDisplayedPlan;
 
 	public int getId()
 	{
@@ -38,5 +46,15 @@ public class TrainingPlan
 	public void setName(String name)
 	{
 		Name = name;
+	}
+
+	public boolean getIsDisplayedPlan()
+	{
+		return IsDisplayedPlan;
+	}
+
+	public void setIsDisplayedPlan(boolean displayedPlan)
+	{
+		IsDisplayedPlan = displayedPlan;
 	}
 }

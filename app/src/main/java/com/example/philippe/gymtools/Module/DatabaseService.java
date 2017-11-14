@@ -4,8 +4,9 @@ import android.content.Context;
 
 import com.example.philippe.gymtools.Objects.TrainingPlan;
 
-import org.reactivestreams.Subscription;
+import java.util.List;
 
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -19,13 +20,18 @@ public class DatabaseService
 		appDatabase = AppDatabase.getAppDatabase(context);
 	}
 
-	public Subscription getTrainingPlans()
+	public Single<List<TrainingPlan>> getTrainingPlans()
 	{
-//		return appDatabase.trainingPlanDao().getTrainingPlans()
-//				.subscribeOn(Schedulers.io())
-//				.observeOn(AndroidSchedulers.mainThread())
-//				.subscribe(x -> {
-//
-//				});
+		return appDatabase.trainingPlanDao().getTrainingPlans()
+				.flattenAsObservable(trainingPlans -> trainingPlans)
+				.filter(trainingPlan -> trainingPlan.getIsDisplayedPlan())
+				.toList()
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread());
+	}
+
+	public void insertTrainingPlan(TrainingPlan trainingPlan)
+	{
+		appDatabase.trainingPlanDao().insertPlan(trainingPlan);
 	}
 }

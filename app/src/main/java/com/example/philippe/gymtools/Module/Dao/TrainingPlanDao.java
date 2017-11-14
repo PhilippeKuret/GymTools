@@ -1,9 +1,12 @@
 package com.example.philippe.gymtools.Module.Dao;
 
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
 import com.example.philippe.gymtools.Objects.TrainingPlan;
+
+import java.util.List;
 
 import io.reactivex.Single;
 
@@ -11,5 +14,8 @@ import io.reactivex.Single;
 public interface TrainingPlanDao
 {
 	@Query("SELECT * FROM  training_plan")
-	Single<TrainingPlan[]> getTrainingPlans();
+	Single<List<TrainingPlan>> getTrainingPlans();
+
+	@Insert
+	void insertPlan(TrainingPlan trainingPlan);
 }
