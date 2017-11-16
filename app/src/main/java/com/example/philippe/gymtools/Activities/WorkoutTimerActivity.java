@@ -16,11 +16,10 @@ import android.widget.TextView;
 
 import com.example.philippe.gymtools.Fragments.CustomTimeDialogFragment;
 import com.example.philippe.gymtools.R;
+import com.example.philippe.gymtools.Utils.MathTools;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.example.philippe.gymtools.Tools.MathTools.*;
 
 public class WorkoutTimerActivity extends AppCompatActivity implements CustomTimeDialogFragment.OnTimeSelectedListener
 {
@@ -62,7 +61,7 @@ public class WorkoutTimerActivity extends AppCompatActivity implements CustomTim
 			mRestTime = sharedPref.getLong("userTime", 60000);
 		}
 
-		restTimer.setText(MilliToMinuteTimeInString(mRestTime));
+		restTimer.setText(MathTools.MilliToMinuteTimeInString(mRestTime));
 
 		startTimer.setOnClickListener(new View.OnClickListener()
 		{
@@ -82,7 +81,7 @@ public class WorkoutTimerActivity extends AppCompatActivity implements CustomTim
 			{
 				mCountDownTimer.cancel();
 				restTimer.setClickable(true);
-				restTimer.setText(MilliToMinuteTimeInString(mRestTime));
+				restTimer.setText(MathTools.MilliToMinuteTimeInString(mRestTime));
 			}
 		});
 
@@ -138,7 +137,7 @@ public class WorkoutTimerActivity extends AppCompatActivity implements CustomTim
 	public void onTimeSelected(String time)
 	{
 		restTimer.setText(time);
-		mRestTime = StringTimeMinuteToMilli(time);
+		mRestTime = MathTools.StringTimeMinuteToMilli(time);
 	}
 
 	@NonNull
@@ -177,7 +176,7 @@ public class WorkoutTimerActivity extends AppCompatActivity implements CustomTim
 				long[] pattern = {0, 1000, 1000, 1000, 1000, 1000};
 
 				v.vibrate(pattern, -1);
-				restTimer.setText(MilliToMinuteTimeInString(mRestTime));
+				restTimer.setText(MathTools.MilliToMinuteTimeInString(mRestTime));
 				restTimer.setClickable(true);
 				if(mIsOnLoop)
 				{

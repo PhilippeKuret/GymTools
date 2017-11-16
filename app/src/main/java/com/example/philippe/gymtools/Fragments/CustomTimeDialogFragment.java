@@ -15,7 +15,7 @@ import com.example.philippe.gymtools.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.example.philippe.gymtools.Tools.MathTools.MilliToMinuteTimeInString;
+import static com.example.philippe.gymtools.Utils.MathTools.MilliToMinuteTimeInString;
 
 public class CustomTimeDialogFragment extends DialogFragment
 {

@@ -8,11 +8,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.philippe.gymtools.R;
+import com.example.philippe.gymtools.Utils.MathTools;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.example.philippe.gymtools.Tools.MathTools.*;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -70,11 +69,11 @@ public class MainActivity extends AppCompatActivity
 				double userInput = Double.parseDouble(v.getText().toString());
 				if(weightType == 1)
 				{
-					weightOutput.setText(String.valueOf(KiloToLbs(userInput)));
+					weightOutput.setText(String.valueOf(MathTools.KiloToLbs(userInput)));
 				}
 				else
 				{
-					weightOutput.setText(String.valueOf(LbsToKilo(userInput)));
+					weightOutput.setText(String.valueOf(MathTools.LbsToKilo(userInput)));
 				}
 				success = true;
 			}

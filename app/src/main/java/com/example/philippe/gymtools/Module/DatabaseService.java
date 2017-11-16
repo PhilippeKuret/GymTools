@@ -29,9 +29,4 @@ public class DatabaseService
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread());
 	}
-
-	public void insertTrainingPlan(TrainingPlan trainingPlan)
-	{
-		appDatabase.trainingPlanDao().insertPlan(trainingPlan);
-	}
 }

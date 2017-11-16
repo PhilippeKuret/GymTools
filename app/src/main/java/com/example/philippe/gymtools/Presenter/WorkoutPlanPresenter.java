@@ -1,32 +1,30 @@
 package com.example.philippe.gymtools.Presenter;
 
-import android.content.Context;
-
+import com.example.philippe.gymtools.Activities.ViewInterface.WorkoutPlanView;
 import com.example.philippe.gymtools.Activities.WorkoutPlanActivity;
 import com.example.philippe.gymtools.Module.DatabaseService;
-import com.example.philippe.gymtools.Objects.TrainingPlan;
+import com.example.philippe.gymtools.Presenter.PresenterInterface.WorkoutPlanInterface;
 
-public class WorkoutPlanPresenter
+public class WorkoutPlanPresenter implements WorkoutPlanInterface
 {
-	WorkoutPlanActivity workoutPlanActivity;
-	DatabaseService db;
+	private WorkoutPlanView workoutPlanView;
+	private DatabaseService db;
 
-	public WorkoutPlanPresenter(WorkoutPlanActivity activity, DatabaseService databaseService)
+	public void setView(WorkoutPlanView workoutPlanView)
 	{
-		workoutPlanActivity = activity;
-		db = databaseService;
+		this.workoutPlanView = workoutPlanView;
+	}
+
+	public void setDatabase(DatabaseService database)
+	{
+		db = database;
 	}
 
 	public void getTrainingPlans()
 	{
 		db.getTrainingPlans()
 				.subscribe(response -> {
-					workoutPlanActivity.setListView(response);
+					workoutPlanView.setListView(response);
 		});
-	}
-
-	public void insertTrainingPlan(TrainingPlan trainingPlan)
-	{
-		db.insertTrainingPlan(trainingPlan);
 	}
 }
