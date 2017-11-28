@@ -11,7 +11,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class DatabaseService
+public class DatabaseService implements DatabaseServiceInterface
 {
 	private final AppDatabase appDatabase;
 

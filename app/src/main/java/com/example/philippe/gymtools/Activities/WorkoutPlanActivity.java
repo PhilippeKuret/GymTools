@@ -36,7 +36,10 @@ public class WorkoutPlanActivity extends AppCompatActivity implements WorkoutPla
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_workout_plan);
 		ButterKnife.bind(this);
-		((GymToolsApplication)getApplication()).getAppComponent().inject(this);
+
+		((GymToolsApplication)getApplication())
+				.getAppComponent()
+				.inject(this);
 
 		DatabaseService db = new DatabaseService(this);
 
