@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface WorkoutPlanView
 {
-	void setListView(List<TrainingPlan> trainingPlans);
+	void setSelectedPlansInView(List<TrainingPlan> trainingPlans);
 }

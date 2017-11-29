@@ -1,7 +1,6 @@
 package com.example.philippe.gymtools.Presenter;
 
 import com.example.philippe.gymtools.Activities.ViewInterface.WorkoutPlanView;
-import com.example.philippe.gymtools.Activities.WorkoutPlanActivity;
 import com.example.philippe.gymtools.Module.DatabaseService;
 import com.example.philippe.gymtools.Module.DatabaseServiceInterface;
 import com.example.philippe.gymtools.Objects.TrainingPlan;
@@ -9,7 +8,6 @@ import com.example.philippe.gymtools.Presenter.PresenterInterface.WorkoutPlanInt
 
 import java.util.List;
 
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
 
 public class WorkoutPlanPresenter implements WorkoutPlanInterface
@@ -36,7 +34,7 @@ public class WorkoutPlanPresenter implements WorkoutPlanInterface
 			@Override
 			public void onSuccess(List<TrainingPlan> trainingPlans)
 			{
-				workoutPlanView.setListView(trainingPlans);
+				workoutPlanView.setSelectedPlansInView(trainingPlans);
 				dispose();
 			}
 
@@ -44,6 +42,25 @@ public class WorkoutPlanPresenter implements WorkoutPlanInterface
 			public void onError(Throwable e)
 			{
 				//TODO
+				e.printStackTrace();
+				dispose();
+			}
+		});
+	}
+
+	public void createTrainingPlan(String name, Boolean isShown)
+	{
+		db.createTrainingPlan(new TrainingPlan(name, isShown)).subscribeWith(new DisposableSingleObserver<Long>()
+		{
+			@Override
+			public void onSuccess(Long aLong)
+			{
+				//TODO create newplandetailactivity
+			}
+
+			@Override
+			public void onError(Throwable e)
+			{
 				e.printStackTrace();
 				dispose();
 			}

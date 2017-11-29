@@ -9,4 +9,6 @@ import io.reactivex.Single;
 public interface DatabaseServiceInterface
 {
 	Single<List<TrainingPlan>> getTrainingPlans();
+
+	Single<Long> createTrainingPlan(TrainingPlan trainingPlan);
 }

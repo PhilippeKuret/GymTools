@@ -10,4 +10,6 @@ public interface WorkoutPlanInterface
 	void setDatabase(DatabaseService database);
 
 	void setView(WorkoutPlanView workoutPlanView);
+
+	void createTrainingPlan(String name, Boolean isShown);
 }

@@ -12,9 +12,8 @@ public class TrainingPlan
 	{
 	}
 
-	public TrainingPlan(int id, String name, boolean isDisplayedPlan)
+	public TrainingPlan(String name, boolean isDisplayedPlan)
 	{
-		Id = id;
 		Name = name;
 		IsDisplayedPlan = isDisplayedPlan;
 	}

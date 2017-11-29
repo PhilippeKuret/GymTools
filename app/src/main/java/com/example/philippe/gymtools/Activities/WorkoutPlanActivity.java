@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import com.example.philippe.gymtools.Activities.Adapters.WorkoutPlanAdapter;
 import com.example.philippe.gymtools.Activities.ViewInterface.WorkoutPlanView;
 import com.example.philippe.gymtools.App.GymToolsApplication;
+import com.example.philippe.gymtools.Fragments.CreateTrainingPlanDialogFragment;
 import com.example.philippe.gymtools.Module.AppDatabase;
 import com.example.philippe.gymtools.Module.DatabaseService;
 import com.example.philippe.gymtools.Objects.TrainingPlan;
@@ -22,10 +23,10 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class WorkoutPlanActivity extends AppCompatActivity implements WorkoutPlanView
+public class WorkoutPlanActivity extends AppCompatActivity implements WorkoutPlanView, CreateTrainingPlanDialogFragment.OnPlanCreatedListener
 {
-	@BindView(R.id.list)
-	RecyclerView listView;
+	@BindView(R.id.selectedPlanList)
+	RecyclerView selectedPlanList;
 
 	@Inject
 	WorkoutPlanInterface planPresenter;
@@ -43,22 +44,30 @@ public class WorkoutPlanActivity extends AppCompatActivity implements WorkoutPla
 
 		DatabaseService db = new DatabaseService(this);
 
-		listView.setLayoutManager(new LinearLayoutManager(this));
+		selectedPlanList.setLayoutManager(new LinearLayoutManager(this));
 
 		planPresenter.setView(this);
 		planPresenter.setDatabase(db);
 		planPresenter.getTrainingPlans();
 	}
 
-	public void setListView(List<TrainingPlan> trainingPlans)
+	public void setSelectedPlansInView(List<TrainingPlan> trainingPlans)
 	{
-		listView.setAdapter(new WorkoutPlanAdapter(trainingPlans));
+		selectedPlanList.setAdapter(new WorkoutPlanAdapter(trainingPlans));
 	}
+
+
 
 	@Override
 	protected void onDestroy()
 	{
 		super.onDestroy();
 		AppDatabase.destroyInstance();
+	}
+
+	@Override
+	public void OnPlanCreated(String name, Boolean isShown)
+	{
+		planPresenter.createTrainingPlan(name, isShown);
 	}
 }

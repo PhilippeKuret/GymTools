@@ -29,4 +29,11 @@ public class DatabaseService implements DatabaseServiceInterface
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread());
 	}
+
+	public Single<Long> createTrainingPlan(TrainingPlan trainingPlan)
+	{
+		return appDatabase.trainingPlanDao().insertTrainingPlan(trainingPlan)
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread());
+	}
 }
