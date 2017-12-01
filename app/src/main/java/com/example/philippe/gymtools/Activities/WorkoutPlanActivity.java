@@ -10,10 +10,8 @@ import com.example.philippe.gymtools.Activities.ViewInterface.WorkoutPlanView;
 import com.example.philippe.gymtools.App.GymToolsApplication;
 import com.example.philippe.gymtools.Fragments.CreateTrainingPlanDialogFragment;
 import com.example.philippe.gymtools.Module.AppDatabase;
-import com.example.philippe.gymtools.Module.DatabaseService;
 import com.example.philippe.gymtools.Objects.TrainingPlan;
 import com.example.philippe.gymtools.Presenter.PresenterInterface.WorkoutPlanInterface;
-import com.example.philippe.gymtools.Presenter.WorkoutPlanPresenter;
 import com.example.philippe.gymtools.R;
 
 import java.util.List;
@@ -23,13 +21,13 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class WorkoutPlanActivity extends AppCompatActivity implements WorkoutPlanView, CreateTrainingPlanDialogFragment.OnPlanCreatedListener
+public class WorkoutPlanActivity extends AppCompatActivity implements WorkoutPlanView
 {
 	@BindView(R.id.selectedPlanList)
-	RecyclerView selectedPlanList;
+	RecyclerView displayedPlans;
 
 	@Inject
-	WorkoutPlanInterface planPresenter;
+	WorkoutPlanInterface workoutPlanPresenter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -42,21 +40,12 @@ public class WorkoutPlanActivity extends AppCompatActivity implements WorkoutPla
 				.getAppComponent()
 				.inject(this);
 
-		DatabaseService db = new DatabaseService(this);
+		displayedPlans.setLayoutManager(new LinearLayoutManager(this));
 
-		selectedPlanList.setLayoutManager(new LinearLayoutManager(this));
-
-		planPresenter.setView(this);
-		planPresenter.setDatabase(db);
-		planPresenter.getTrainingPlans();
+		workoutPlanPresenter.setView(this);
+		workoutPlanPresenter.setDatabase(this);
+		workoutPlanPresenter.getDisplayedTrainingPlans();
 	}
-
-	public void setSelectedPlansInView(List<TrainingPlan> trainingPlans)
-	{
-		selectedPlanList.setAdapter(new WorkoutPlanAdapter(trainingPlans));
-	}
-
-
 
 	@Override
 	protected void onDestroy()
@@ -65,9 +54,8 @@ public class WorkoutPlanActivity extends AppCompatActivity implements WorkoutPla
 		AppDatabase.destroyInstance();
 	}
 
-	@Override
-	public void OnPlanCreated(String name, Boolean isShown)
+	public void setSelectedPlansInView(List<TrainingPlan> trainingPlans)
 	{
-		planPresenter.createTrainingPlan(name, isShown);
+		displayedPlans.setAdapter(new WorkoutPlanAdapter(WorkoutPlanActivity.this, trainingPlans));
 	}
 }

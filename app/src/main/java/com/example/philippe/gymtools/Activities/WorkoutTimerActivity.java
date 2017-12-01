@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -63,63 +62,43 @@ public class WorkoutTimerActivity extends AppCompatActivity implements CustomTim
 
 		restTimer.setText(MathTools.MilliToMinuteTimeInString(mRestTime));
 
-		startTimer.setOnClickListener(new View.OnClickListener()
+		startTimer.setOnClickListener(v ->
 		{
-			@Override
-			public void onClick(View v)
+			mCountDownTimer = getCountDownTimer();
+			restTimer.setClickable(false);
+			mCountDownTimer.start();
+		});
+
+		stopTimer.setOnClickListener(v ->
+		{
+			mCountDownTimer.cancel();
+			restTimer.setClickable(true);
+			restTimer.setText(MathTools.MilliToMinuteTimeInString(mRestTime));
+		});
+
+		loopTimer.setOnClickListener(v ->
+		{
+			if(loopTimer.isChecked())
 			{
-				mCountDownTimer = getCountDownTimer();
-				restTimer.setClickable(false);
-				mCountDownTimer.start();
+				mIsOnLoop = true;
+			}
+			else
+			{
+				mIsOnLoop = false;
 			}
 		});
 
-		stopTimer.setOnClickListener(new View.OnClickListener()
+		weightConvertActivityNavigation.setOnClickListener(v ->
 		{
-			@Override
-			public void onClick(View v)
-			{
-				mCountDownTimer.cancel();
-				restTimer.setClickable(true);
-				restTimer.setText(MathTools.MilliToMinuteTimeInString(mRestTime));
-			}
+			Intent intent = new Intent(WorkoutTimerActivity.this, MainActivity.class);
+			WorkoutTimerActivity.this.startActivity(intent);
 		});
 
-		loopTimer.setOnClickListener(new View.OnClickListener()
+		restTimer.setOnClickListener(v ->
 		{
-			@Override
-			public void onClick(View v)
-			{
-				if(loopTimer.isChecked())
-				{
-					mIsOnLoop = true;
-				}
-				else
-				{
-					mIsOnLoop = false;
-				}
-			}
-		});
-
-		weightConvertActivityNavigation.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				Intent intent = new Intent(WorkoutTimerActivity.this, MainActivity.class);
-				WorkoutTimerActivity.this.startActivity(intent);
-			}
-		});
-
-		restTimer.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				FragmentManager fm = getSupportFragmentManager();
-				CustomTimeDialogFragment customTimeDialogFragment = CustomTimeDialogFragment.newInstance(mRestTime);
-				customTimeDialogFragment.show(fm, "fragment_custom_timer");
-			}
+			FragmentManager fm = getSupportFragmentManager();
+			CustomTimeDialogFragment customTimeDialogFragment = CustomTimeDialogFragment.newInstance(mRestTime);
+			customTimeDialogFragment.show(fm, "fragment_custom_timer");
 		});
 	}
 

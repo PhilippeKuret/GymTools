@@ -20,19 +20,25 @@ public class DatabaseService implements DatabaseServiceInterface
 		appDatabase = AppDatabase.getAppDatabase(context);
 	}
 
-	public Single<List<TrainingPlan>> getTrainingPlans()
+	public Single<List<TrainingPlan>> getDisplayedTrainingPlans()
 	{
-		return appDatabase.trainingPlanDao().getTrainingPlans()
-				.flattenAsObservable(trainingPlans -> trainingPlans)
-				.filter(trainingPlan -> trainingPlan.getIsDisplayedPlan())
-				.toList()
+		return appDatabase.trainingPlanDao().getDisplayedTrainingPlans(true)
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread());
 	}
 
-	public Single<Long> createTrainingPlan(TrainingPlan trainingPlan)
+	public Single<List<TrainingPlan>> getTrainingPlans()
 	{
-		return appDatabase.trainingPlanDao().insertTrainingPlan(trainingPlan)
+		return appDatabase.trainingPlanDao().getTrainingPlans()
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread());
+	}
+
+	public Single<Object> createTrainingPlan(TrainingPlan trainingPlan)
+	{
+		return Single.fromObservable(observer ->
+				appDatabase.trainingPlanDao().insertTrainingPlan(trainingPlan)
+		)
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread());
 	}

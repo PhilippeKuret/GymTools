@@ -1,12 +1,17 @@
 package com.example.philippe.gymtools.Activities.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.philippe.gymtools.Activities.MainActivity;
+import com.example.philippe.gymtools.Activities.TrainingPlansActivity;
+import com.example.philippe.gymtools.Activities.WorkoutTimerActivity;
 import com.example.philippe.gymtools.Objects.TrainingPlan;
 import com.example.philippe.gymtools.R;
 
@@ -17,10 +22,13 @@ import butterknife.ButterKnife;
 
 public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.ViewHolder>
 {
+	private Context context;
+
 	private List<TrainingPlan> trainingPlans;
 
-	public WorkoutPlanAdapter(List<TrainingPlan> trainingPlans)
+	public WorkoutPlanAdapter(Context context, List<TrainingPlan> trainingPlans)
 	{
+		this.context = context;
 		this.trainingPlans = trainingPlans;
 	}
 
@@ -40,6 +48,12 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
 			holder.planIsShow.setText("true");
 		else
 			holder.planIsShow.setText("false");
+
+		holder.planListNavigationButton.setOnClickListener(v ->
+		{
+			Intent intent = new Intent(context, TrainingPlansActivity.class);
+			context.startActivity(intent);
+		});
 	}
 
 
@@ -56,6 +70,9 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
 
 		@BindView(R.id.planIsShow)
 		TextView planIsShow;
+
+		@BindView(R.id.planListNavigationButton)
+		Button planListNavigationButton;
 
 		ViewHolder(View itemView)
 		{

@@ -1,8 +1,7 @@
 package com.example.philippe.gymtools.DI;
 
+import com.example.philippe.gymtools.Activities.TrainingPlansActivity;
 import com.example.philippe.gymtools.Activities.WorkoutPlanActivity;
-import com.example.philippe.gymtools.Module.DatabaseService;
-import com.example.philippe.gymtools.Presenter.WorkoutPlanPresenter;
 
 import javax.inject.Singleton;
 
@@ -14,4 +13,6 @@ import dagger.Component;
 public interface AppComponent {
 
 	void inject(WorkoutPlanActivity target);
+
+	void inject(TrainingPlansActivity target);
 }

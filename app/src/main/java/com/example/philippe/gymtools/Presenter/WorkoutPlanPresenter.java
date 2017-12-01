@@ -1,5 +1,7 @@
 package com.example.philippe.gymtools.Presenter;
 
+import android.content.Context;
+
 import com.example.philippe.gymtools.Activities.ViewInterface.WorkoutPlanView;
 import com.example.philippe.gymtools.Module.DatabaseService;
 import com.example.philippe.gymtools.Module.DatabaseServiceInterface;
@@ -21,14 +23,14 @@ public class WorkoutPlanPresenter implements WorkoutPlanInterface
 		this.workoutPlanView = workoutPlanView;
 	}
 
-	public void setDatabase(DatabaseService database)
+	public void setDatabase(Context context)
 	{
-		db = database;
+		db = new DatabaseService(context);
 	}
 
-	public void getTrainingPlans()
+	public void getDisplayedTrainingPlans()
 	{
-		db.getTrainingPlans().subscribeWith(new DisposableSingleObserver<List<TrainingPlan>>()
+		db.getDisplayedTrainingPlans().subscribeWith(new DisposableSingleObserver<List<TrainingPlan>>()
 		{
 
 			@Override
@@ -42,25 +44,6 @@ public class WorkoutPlanPresenter implements WorkoutPlanInterface
 			public void onError(Throwable e)
 			{
 				//TODO
-				e.printStackTrace();
-				dispose();
-			}
-		});
-	}
-
-	public void createTrainingPlan(String name, Boolean isShown)
-	{
-		db.createTrainingPlan(new TrainingPlan(name, isShown)).subscribeWith(new DisposableSingleObserver<Long>()
-		{
-			@Override
-			public void onSuccess(Long aLong)
-			{
-				//TODO create newplandetailactivity
-			}
-
-			@Override
-			public void onError(Throwable e)
-			{
 				e.printStackTrace();
 				dispose();
 			}
