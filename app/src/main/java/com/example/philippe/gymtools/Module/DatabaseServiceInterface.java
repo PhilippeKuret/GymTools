@@ -13,4 +13,6 @@ public interface DatabaseServiceInterface
 	Single<List<TrainingPlan>> getTrainingPlans();
 
 	Single<Object> createTrainingPlan(TrainingPlan trainingPlan);
+
+	Single<Object> deleteTrainingPlan(TrainingPlan trainingPlan);
 }

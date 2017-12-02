@@ -1,6 +1,7 @@
 package com.example.philippe.gymtools.Module.Dao;
 
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
@@ -17,6 +18,9 @@ public interface TrainingPlanDao
 {
 	@Insert(onConflict = FAIL)
 	void insertTrainingPlan(TrainingPlan trainingPlan);
+
+	@Delete
+	void deleteTrainingPlan(TrainingPlan trainingPlan);
 
 	@Query("SELECT * FROM training_plan")
 	Single<List<TrainingPlan>> getTrainingPlans();

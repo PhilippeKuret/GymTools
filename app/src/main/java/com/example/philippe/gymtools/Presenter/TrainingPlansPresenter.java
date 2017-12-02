@@ -1,6 +1,7 @@
 package com.example.philippe.gymtools.Presenter;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.philippe.gymtools.Activities.ViewInterface.TrainingPlansView;
 import com.example.philippe.gymtools.Module.DatabaseService;
@@ -52,6 +53,25 @@ public class TrainingPlansPresenter implements TrainingPlansInterface
 	public void createTrainingPlan(String name, Boolean isShown)
 	{
 		db.createTrainingPlan(new TrainingPlan(0, name, isShown)).subscribeWith(new DisposableSingleObserver<Object>()
+		{
+			@Override
+			public void onSuccess(Object o)
+			{
+				dispose();
+			}
+
+			@Override
+			public void onError(Throwable e)
+			{
+				e.printStackTrace();
+				dispose();
+			}
+		});
+	}
+
+	public void deleteTrainingPlan(TrainingPlan trainingPlan)
+	{
+		db.deleteTrainingPlan(trainingPlan).subscribeWith(new DisposableSingleObserver<Object>()
 		{
 			@Override
 			public void onSuccess(Object o)

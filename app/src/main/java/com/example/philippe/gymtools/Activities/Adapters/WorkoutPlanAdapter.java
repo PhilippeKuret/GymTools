@@ -9,9 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.philippe.gymtools.Activities.MainActivity;
 import com.example.philippe.gymtools.Activities.TrainingPlansActivity;
-import com.example.philippe.gymtools.Activities.WorkoutTimerActivity;
 import com.example.philippe.gymtools.Objects.TrainingPlan;
 import com.example.philippe.gymtools.R;
 
@@ -44,6 +42,7 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
 	public void onBindViewHolder(WorkoutPlanAdapter.ViewHolder holder, int position)
 	{
 		holder.planName.setText(trainingPlans.get(position).getName());
+		holder.planId.setText(String.valueOf(trainingPlans.get(position).getId()));
 		if(trainingPlans.get(position).getIsDisplayedPlan())
 			holder.planIsShow.setText("true");
 		else
@@ -55,7 +54,6 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
 			context.startActivity(intent);
 		});
 	}
-
 
 	@Override
 	public int getItemCount()
@@ -70,6 +68,9 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
 
 		@BindView(R.id.planIsShow)
 		TextView planIsShow;
+
+		@BindView(R.id.planId)
+		TextView planId;
 
 		@BindView(R.id.planListNavigationButton)
 		Button planListNavigationButton;

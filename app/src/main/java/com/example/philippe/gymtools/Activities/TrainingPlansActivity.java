@@ -35,6 +35,8 @@ public class TrainingPlansActivity extends AppCompatActivity implements Training
 	@Inject
 	TrainingPlansInterface trainingPlansPresenter;
 
+	private WorkoutPlanAdapter adapter;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -69,12 +71,16 @@ public class TrainingPlansActivity extends AppCompatActivity implements Training
 
 	public void setSelectedPlansInView(List<TrainingPlan> trainingPlans)
 	{
-		plans.setAdapter(new WorkoutPlanAdapter(TrainingPlansActivity.this, trainingPlans));
+		adapter = new WorkoutPlanAdapter(TrainingPlansActivity.this, trainingPlans);
+		plans.setAdapter(adapter);
+
 	}
 
 	@Override
 	public void OnPlanCreated(String name, Boolean isShown)
 	{
 		trainingPlansPresenter.createTrainingPlan(name, isShown);
+		plans.setAdapter(null);
+		trainingPlansPresenter.getTrainingPlans();
 	}
 }

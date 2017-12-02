@@ -29,6 +29,8 @@ public class WorkoutPlanActivity extends AppCompatActivity implements WorkoutPla
 	@Inject
 	WorkoutPlanInterface workoutPlanPresenter;
 
+	private WorkoutPlanAdapter adapter;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -48,6 +50,13 @@ public class WorkoutPlanActivity extends AppCompatActivity implements WorkoutPla
 	}
 
 	@Override
+	protected void onResume()
+	{
+		super.onResume();
+		workoutPlanPresenter.getDisplayedTrainingPlans();
+	}
+
+	@Override
 	protected void onDestroy()
 	{
 		super.onDestroy();
@@ -56,6 +65,7 @@ public class WorkoutPlanActivity extends AppCompatActivity implements WorkoutPla
 
 	public void setSelectedPlansInView(List<TrainingPlan> trainingPlans)
 	{
-		displayedPlans.setAdapter(new WorkoutPlanAdapter(WorkoutPlanActivity.this, trainingPlans));
+		adapter = new WorkoutPlanAdapter(WorkoutPlanActivity.this, trainingPlans);
+		displayedPlans.setAdapter(adapter);
 	}
 }
