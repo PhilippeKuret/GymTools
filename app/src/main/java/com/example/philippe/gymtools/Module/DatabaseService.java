@@ -22,14 +22,14 @@ public class DatabaseService implements DatabaseServiceInterface
 
 	public Single<List<TrainingPlan>> getDisplayedTrainingPlans()
 	{
-		return appDatabase.trainingPlanDao().getDisplayedTrainingPlans(true)
+		return appDatabase.trainingPlanDao().getTrainingPlansDisplayedOption(true)
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread());
 	}
 
-	public Single<List<TrainingPlan>> getTrainingPlans()
+	public Single<List<TrainingPlan>> getNotDisplayedTrainingPlans()
 	{
-		return appDatabase.trainingPlanDao().getTrainingPlans()
+		return appDatabase.trainingPlanDao().getTrainingPlansDisplayedOption(false)
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread());
 	}

@@ -89,11 +89,13 @@ public class TrainingPlansActivity extends AppCompatActivity implements Training
 		trainingPlansPresenter.getTrainingPlans();
 	}
 
+	//UPDATE ON SWITCH
 	@Override
 	public void onListItemButtonClick(TrainingPlan trainingPlan)
 	{
 		trainingPlan.setIsDisplayedPlan(true);
 		selectedTrainingPlan.setIsDisplayedPlan(false);
+
 		trainingPlansPresenter.updateMultipleTrainingPlans(trainingPlan, selectedTrainingPlan);
 		finish();
 	}

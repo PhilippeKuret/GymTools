@@ -10,7 +10,7 @@ public interface DatabaseServiceInterface
 {
 	Single<List<TrainingPlan>> getDisplayedTrainingPlans();
 
-	Single<List<TrainingPlan>> getTrainingPlans();
+	Single<List<TrainingPlan>> getNotDisplayedTrainingPlans();
 
 	Single<Object> createTrainingPlan(TrainingPlan trainingPlan);
 

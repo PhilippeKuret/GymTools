@@ -26,9 +26,6 @@ public interface TrainingPlanDao
 	@Update
 	void updateMultipleTrainingPlans(TrainingPlan... trainingPlans);
 
-	@Query("SELECT * FROM training_plan")
-	Single<List<TrainingPlan>> getTrainingPlans();
-
 	@Query("SELECT * FROM  training_plan WHERE is_displayed = :isDisplayed")
-	Single<List<TrainingPlan>> getDisplayedTrainingPlans(Boolean isDisplayed);
+	Single<List<TrainingPlan>> getTrainingPlansDisplayedOption(Boolean isDisplayed);
 }

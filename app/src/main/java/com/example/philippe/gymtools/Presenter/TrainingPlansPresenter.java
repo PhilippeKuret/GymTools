@@ -1,7 +1,6 @@
 package com.example.philippe.gymtools.Presenter;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.example.philippe.gymtools.Activities.ViewInterface.TrainingPlansView;
 import com.example.philippe.gymtools.Module.DatabaseService;
@@ -31,7 +30,7 @@ public class TrainingPlansPresenter implements TrainingPlansInterface
 
 	public void getTrainingPlans()
 	{
-		db.getTrainingPlans().subscribeWith(new DisposableSingleObserver<List<TrainingPlan>>()
+		db.getNotDisplayedTrainingPlans().subscribeWith(new DisposableSingleObserver<List<TrainingPlan>>()
 		{
 			@Override
 			public void onSuccess(List<TrainingPlan> trainingPlans)
