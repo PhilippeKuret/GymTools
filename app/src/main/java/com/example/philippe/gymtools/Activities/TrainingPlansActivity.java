@@ -1,5 +1,7 @@
 package com.example.philippe.gymtools.Activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,7 +25,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TrainingPlansActivity extends AppCompatActivity implements TrainingPlansView, CreateTrainingPlanDialogFragment.OnPlanCreatedListener
+public class TrainingPlansActivity extends AppCompatActivity implements TrainingPlansView, CreateTrainingPlanDialogFragment.OnPlanCreatedListener, WorkoutPlanAdapter.onButtonClickFunction
 {
 
 	@BindView(R.id.completePlanList)
@@ -37,17 +39,21 @@ public class TrainingPlansActivity extends AppCompatActivity implements Training
 
 	private WorkoutPlanAdapter adapter;
 
+	private TrainingPlan selectedTrainingPlan;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_training_plans);
-
 		ButterKnife.bind(this);
 
 		((GymToolsApplication)getApplication())
 				.getAppComponent()
 				.inject(this);
+
+		Bundle data = getIntent().getExtras();
+		selectedTrainingPlan = data.getParcelable("plan");
 
 		plans.setLayoutManager(new LinearLayoutManager(this));
 
@@ -73,7 +79,6 @@ public class TrainingPlansActivity extends AppCompatActivity implements Training
 	{
 		adapter = new WorkoutPlanAdapter(TrainingPlansActivity.this, trainingPlans);
 		plans.setAdapter(adapter);
-
 	}
 
 	@Override
@@ -82,5 +87,29 @@ public class TrainingPlansActivity extends AppCompatActivity implements Training
 		trainingPlansPresenter.createTrainingPlan(name, isShown);
 		plans.setAdapter(null);
 		trainingPlansPresenter.getTrainingPlans();
+	}
+
+	@Override
+	public void onListItemButtonClick(TrainingPlan trainingPlan)
+	{
+		trainingPlan.setIsDisplayedPlan(true);
+		selectedTrainingPlan.setIsDisplayedPlan(false);
+		trainingPlansPresenter.updateMultipleTrainingPlans(trainingPlan, selectedTrainingPlan);
+		finish();
+	}
+
+	@Override
+	public void deleteListItemButtonClick(TrainingPlan trainingPlan)
+	{
+		trainingPlansPresenter.deleteTrainingPlan(trainingPlan);
+		plans.setAdapter(null);
+		trainingPlansPresenter.getTrainingPlans();
+	}
+
+	public static Intent createIntent(Context context, TrainingPlan plan)
+	{
+		Intent intent = new Intent(context, TrainingPlansActivity.class);
+		intent.putExtra("plan", plan);
+		return intent;
 	}
 }

@@ -49,4 +49,23 @@ public class WorkoutPlanPresenter implements WorkoutPlanInterface
 			}
 		});
 	}
+
+	public void deleteTrainingPlan(TrainingPlan trainingPlan)
+	{
+		db.deleteTrainingPlan(trainingPlan).subscribeWith(new DisposableSingleObserver<Object>()
+		{
+			@Override
+			public void onSuccess(Object o)
+			{
+				dispose();
+			}
+
+			@Override
+			public void onError(Throwable e)
+			{
+				e.printStackTrace();
+				dispose();
+			}
+		});
+	}
 }

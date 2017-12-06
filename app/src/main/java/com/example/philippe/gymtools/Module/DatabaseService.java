@@ -51,4 +51,13 @@ public class DatabaseService implements DatabaseServiceInterface
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread());
 	}
+
+	public Single<Object> updateMultipleTrainingPlans(TrainingPlan... trainingPlans)
+	{
+		return Single.fromObservable(observer -> {
+			appDatabase.trainingPlanDao().updateMultipleTrainingPlans(trainingPlans);
+		})
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread());
+	}
 }

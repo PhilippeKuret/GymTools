@@ -87,4 +87,23 @@ public class TrainingPlansPresenter implements TrainingPlansInterface
 			}
 		});
 	}
+
+	public void updateMultipleTrainingPlans(TrainingPlan... trainingPlans)
+	{
+		db.updateMultipleTrainingPlans(trainingPlans).subscribeWith(new DisposableSingleObserver<Object>()
+		{
+			@Override
+			public void onSuccess(Object o)
+			{
+				dispose();
+			}
+
+			@Override
+			public void onError(Throwable e)
+			{
+				e.printStackTrace();
+				dispose();
+			}
+		});
+	}
 }

@@ -15,4 +15,6 @@ public interface DatabaseServiceInterface
 	Single<Object> createTrainingPlan(TrainingPlan trainingPlan);
 
 	Single<Object> deleteTrainingPlan(TrainingPlan trainingPlan);
+
+	Single<Object> updateMultipleTrainingPlans(TrainingPlan... trainingPlans);
 }

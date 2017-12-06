@@ -1,7 +1,6 @@
 package com.example.philippe.gymtools.Activities.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.philippe.gymtools.Activities.TrainingPlansActivity;
 import com.example.philippe.gymtools.Objects.TrainingPlan;
 import com.example.philippe.gymtools.R;
 
@@ -28,6 +26,12 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
 	{
 		this.context = context;
 		this.trainingPlans = trainingPlans;
+	}
+
+	public interface onButtonClickFunction
+	{
+		void onListItemButtonClick(TrainingPlan trainingPlan);
+		void deleteListItemButtonClick(TrainingPlan trainingPlan);
 	}
 
 	@Override
@@ -50,8 +54,13 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
 
 		holder.planListNavigationButton.setOnClickListener(v ->
 		{
-			Intent intent = new Intent(context, TrainingPlansActivity.class);
-			context.startActivity(intent);
+			onButtonClickFunction listener = (onButtonClickFunction) context;
+			listener.onListItemButtonClick(trainingPlans.get(position));
+		});
+
+		holder.deletePlanButton.setOnClickListener(v -> {
+			onButtonClickFunction listener = (onButtonClickFunction) context;
+			listener.deleteListItemButtonClick(trainingPlans.get(position));
 		});
 	}
 
@@ -74,6 +83,9 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
 
 		@BindView(R.id.planListNavigationButton)
 		Button planListNavigationButton;
+
+		@BindView(R.id.deletePlanButton)
+		Button deletePlanButton;
 
 		ViewHolder(View itemView)
 		{

@@ -20,6 +20,12 @@
         android:layout_height="match_parent"/>
     <Button
         android:id="@+id/planListNavigationButton"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="Switch Plan"/>
+    <Button
+        android:id="@+id/deletePlanButton"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="Delete"/>
 </LinearLayout>

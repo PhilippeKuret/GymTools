@@ -1,5 +1,6 @@
 package com.example.philippe.gymtools.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import com.example.philippe.gymtools.Activities.Adapters.WorkoutPlanAdapter;
 import com.example.philippe.gymtools.Activities.ViewInterface.WorkoutPlanView;
 import com.example.philippe.gymtools.App.GymToolsApplication;
-import com.example.philippe.gymtools.Fragments.CreateTrainingPlanDialogFragment;
 import com.example.philippe.gymtools.Module.AppDatabase;
 import com.example.philippe.gymtools.Objects.TrainingPlan;
 import com.example.philippe.gymtools.Presenter.PresenterInterface.WorkoutPlanInterface;
@@ -21,7 +21,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class WorkoutPlanActivity extends AppCompatActivity implements WorkoutPlanView
+public class WorkoutPlanActivity extends AppCompatActivity implements WorkoutPlanView, WorkoutPlanAdapter.onButtonClickFunction
 {
 	@BindView(R.id.selectedPlanList)
 	RecyclerView displayedPlans;
@@ -67,5 +67,20 @@ public class WorkoutPlanActivity extends AppCompatActivity implements WorkoutPla
 	{
 		adapter = new WorkoutPlanAdapter(WorkoutPlanActivity.this, trainingPlans);
 		displayedPlans.setAdapter(adapter);
+	}
+
+	@Override
+	public void onListItemButtonClick(TrainingPlan trainingPlan)
+	{
+		Intent intent = TrainingPlansActivity.createIntent(this, trainingPlan);
+		this.startActivity(intent);
+	}
+
+	@Override
+	public void deleteListItemButtonClick(TrainingPlan trainingPlan)
+	{
+		workoutPlanPresenter.deleteTrainingPlan(trainingPlan);
+		displayedPlans.setAdapter(null);
+		workoutPlanPresenter.getDisplayedTrainingPlans();
 	}
 }
