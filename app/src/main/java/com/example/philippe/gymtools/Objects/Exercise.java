@@ -2,21 +2,29 @@ package com.example.philippe.gymtools.Objects;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-@Entity(tableName = "exercise")
+import static android.arch.persistence.room.ForeignKey.CASCADE;
+
+@Entity(tableName = "exercise", foreignKeys = @ForeignKey(entity =
+															TrainingPlan.class,
+															onDelete = CASCADE,
+															parentColumns = "id",
+															childColumns = "plan_id"))
 public class Exercise implements Parcelable
 {
 	public Exercise()
 	{
 	}
 
-	public Exercise(int id, String name)
+	public Exercise(int id, String name, int planId)
 	{
 		Id = id;
 		Name = name;
+		this.planId = planId;
 	}
 
 	@PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id")
@@ -25,26 +33,8 @@ public class Exercise implements Parcelable
 	@ColumnInfo(name = "name")
 	private String Name;
 
-	protected Exercise(Parcel in)
-	{
-		Id = in.readInt();
-		Name = in.readString();
-	}
-
-	public static final Creator<Exercise> CREATOR = new Creator<Exercise>()
-	{
-		@Override
-		public Exercise createFromParcel(Parcel in)
-		{
-			return new Exercise(in);
-		}
-
-		@Override
-		public Exercise[] newArray(int size)
-		{
-			return new Exercise[size];
-		}
-	};
+	@ColumnInfo(name = "plan_id")
+	private int planId;
 
 	public int getId()
 	{
@@ -66,10 +56,22 @@ public class Exercise implements Parcelable
 		this.Name = name;
 	}
 
-	@Override
-	public int describeContents()
+
+	public int getPlanId()
 	{
-		return 0;
+		return planId;
+	}
+
+	public void setPlanId(int planId)
+	{
+		this.planId = planId;
+	}
+
+	protected Exercise(Parcel in)
+	{
+		Id = in.readInt();
+		Name = in.readString();
+		planId = in.readInt();
 	}
 
 	@Override
@@ -77,5 +79,27 @@ public class Exercise implements Parcelable
 	{
 		dest.writeInt(Id);
 		dest.writeString(Name);
+		dest.writeInt(planId);
 	}
+
+	@Override
+	public int describeContents()
+	{
+		return 0;
+	}
+
+	public static final Creator<Exercise> CREATOR = new Creator<Exercise>()
+	{
+		@Override
+		public Exercise createFromParcel(Parcel in)
+		{
+			return new Exercise(in);
+		}
+
+		@Override
+		public Exercise[] newArray(int size)
+		{
+			return new Exercise[size];
+		}
+	};
 }
