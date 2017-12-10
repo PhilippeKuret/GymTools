@@ -1,7 +1,6 @@
 package com.example.philippe.gymtools.Module;
 
 import android.content.Context;
-import android.os.Parcelable;
 
 import com.example.philippe.gymtools.Objects.Exercise;
 
@@ -11,7 +10,7 @@ import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class ExerciseService
+public class ExerciseService implements ExerciseServiceInterface
 {
 	private final AppDatabase appDatabase;
 
