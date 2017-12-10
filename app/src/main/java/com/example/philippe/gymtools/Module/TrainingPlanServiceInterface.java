@@ -6,7 +6,7 @@ import java.util.List;
 
 import io.reactivex.Single;
 
-public interface DatabaseServiceInterface
+public interface TrainingPlanServiceInterface
 {
 	Single<List<TrainingPlan>> getDisplayedTrainingPlans();
 

@@ -11,11 +11,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class DatabaseService implements DatabaseServiceInterface
+public class TrainingPlanService implements TrainingPlanServiceInterface
 {
 	private final AppDatabase appDatabase;
 
-	public DatabaseService(Context context)
+	public TrainingPlanService(Context context)
 	{
 		appDatabase = AppDatabase.getAppDatabase(context);
 	}

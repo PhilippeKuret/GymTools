@@ -3,8 +3,8 @@ package com.example.philippe.gymtools.Presenter;
 import android.content.Context;
 
 import com.example.philippe.gymtools.Activities.ViewInterface.WorkoutPlanView;
-import com.example.philippe.gymtools.Module.DatabaseService;
-import com.example.philippe.gymtools.Module.DatabaseServiceInterface;
+import com.example.philippe.gymtools.Module.TrainingPlanService;
+import com.example.philippe.gymtools.Module.TrainingPlanServiceInterface;
 import com.example.philippe.gymtools.Objects.TrainingPlan;
 import com.example.philippe.gymtools.Presenter.PresenterInterface.WorkoutPlanInterface;
 
@@ -16,7 +16,7 @@ public class WorkoutPlanPresenter implements WorkoutPlanInterface
 {
 	private WorkoutPlanView workoutPlanView;
 
-	private DatabaseServiceInterface db;
+	private TrainingPlanServiceInterface db;
 
 	public void setView(WorkoutPlanView workoutPlanView)
 	{
@@ -25,7 +25,7 @@ public class WorkoutPlanPresenter implements WorkoutPlanInterface
 
 	public void setDatabase(Context context)
 	{
-		db = new DatabaseService(context);
+		db = new TrainingPlanService(context);
 	}
 
 	public void getDisplayedTrainingPlans()
