@@ -2,21 +2,30 @@ package com.example.philippe.gymtools.Presenter;
 
 import android.content.Context;
 
+import com.example.philippe.gymtools.Activities.ViewInterface.PlanDetailsView;
 import com.example.philippe.gymtools.Module.ExerciseService;
 import com.example.philippe.gymtools.Module.ExerciseServiceInterface;
 import com.example.philippe.gymtools.Objects.Exercise;
+import com.example.philippe.gymtools.Presenter.PresenterInterface.PlanDetailsInterface;
 
 import java.util.List;
 
 import io.reactivex.observers.DisposableSingleObserver;
 
-public class PlanDetailsPresenter
+public class PlanDetailsPresenter implements PlanDetailsInterface
 {
 	private ExerciseServiceInterface db;
+
+	private PlanDetailsView planDetailsView;
 
 	public void setDatabase(Context context)
 	{
 		db = new ExerciseService(context);
+	}
+
+	public void setView(PlanDetailsView planDetailsView)
+	{
+		this.planDetailsView = planDetailsView;
 	}
 
 	public void getExercises(int planId)

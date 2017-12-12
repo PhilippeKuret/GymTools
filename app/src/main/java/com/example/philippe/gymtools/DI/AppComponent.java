@@ -1,5 +1,6 @@
 package com.example.philippe.gymtools.DI;
 
+import com.example.philippe.gymtools.Activities.PlanDetailsActivity;
 import com.example.philippe.gymtools.Activities.TrainingPlansActivity;
 import com.example.philippe.gymtools.Activities.WorkoutPlanActivity;
 
@@ -15,4 +16,6 @@ public interface AppComponent {
 	void inject(WorkoutPlanActivity target);
 
 	void inject(TrainingPlansActivity target);
+
+	void inject(PlanDetailsActivity target);
 }

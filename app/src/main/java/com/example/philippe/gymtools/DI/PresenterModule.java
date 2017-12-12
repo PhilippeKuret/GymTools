@@ -1,5 +1,7 @@
 package com.example.philippe.gymtools.DI;
 
+import com.example.philippe.gymtools.Presenter.PlanDetailsPresenter;
+import com.example.philippe.gymtools.Presenter.PresenterInterface.PlanDetailsInterface;
 import com.example.philippe.gymtools.Presenter.PresenterInterface.TrainingPlansInterface;
 import com.example.philippe.gymtools.Presenter.PresenterInterface.WorkoutPlanInterface;
 import com.example.philippe.gymtools.Presenter.TrainingPlansPresenter;
@@ -22,4 +24,8 @@ class PresenterModule {
 	@Provides
 	@Singleton
 	TrainingPlansInterface provideTrainingPlansInterface() { return new TrainingPlansPresenter(); }
+
+	@Provides
+	@Singleton
+	PlanDetailsInterface providePlanDetailsInterface() {return new PlanDetailsPresenter(); }
 }

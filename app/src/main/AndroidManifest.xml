@@ -27,7 +27,7 @@
         </activity>
         <activity android:name=".Activities.TrainingPlansActivity">
         </activity>
-        <activity android:name=".Activities.PlanDetails">
+        <activity android:name=".Activities.PlanDetailsActivity">
         </activity>
     </application>
 
