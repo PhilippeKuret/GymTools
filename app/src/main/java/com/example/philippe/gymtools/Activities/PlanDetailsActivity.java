@@ -2,6 +2,7 @@ package com.example.philippe.gymtools.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.example.philippe.gymtools.Activities.Adapters.WorkoutPlanAdapter;
 import com.example.philippe.gymtools.Activities.ViewInterface.PlanDetailsView;
 import com.example.philippe.gymtools.App.GymToolsApplication;
+import com.example.philippe.gymtools.Fragments.CreateExerciseDialogFragment;
 import com.example.philippe.gymtools.Module.AppDatabase;
 import com.example.philippe.gymtools.Objects.TrainingPlan;
 import com.example.philippe.gymtools.Presenter.PresenterInterface.PlanDetailsInterface;
@@ -22,7 +24,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PlanDetailsActivity extends AppCompatActivity implements PlanDetailsView
+public class PlanDetailsActivity extends AppCompatActivity implements PlanDetailsView, CreateExerciseDialogFragment.OnExerciseCreatedListener
 {
 	@BindView(R.id.ExerciseList)
 	RecyclerView exercises;
@@ -64,6 +66,13 @@ public class PlanDetailsActivity extends AppCompatActivity implements PlanDetail
 		planDetailsPresenter.setView(this);
 		planDetailsPresenter.setDatabase(this);
 		planDetailsPresenter.getExercises(selectedTrainingPlan.getId());
+
+		newExerciseButton.setOnClickListener(v ->
+		{
+			FragmentManager fm = getSupportFragmentManager();
+			CreateExerciseDialogFragment createExerciseDialogFragment = new CreateExerciseDialogFragment();
+			createExerciseDialogFragment.show(fm, "create_exercise");
+		});
 	}
 
 	@Override
@@ -71,6 +80,12 @@ public class PlanDetailsActivity extends AppCompatActivity implements PlanDetail
 	{
 		super.onDestroy();
 		AppDatabase.destroyInstance();
+	}
+
+	@Override
+	public void OnExercisePlanCreated(String name)
+	{
+
 	}
 
 	public static Intent createIntent(Context context, TrainingPlan plan)

@@ -4,21 +4,15 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
     <EditText
-        android:id="@+id/newPlanName"
+        android:id="@+id/newExerciseName"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:inputType="text"
-        android:hint="new training plan name"/>
-
-    <RadioButton
-        android:id="@+id/isPlanShownRadioButton"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Is in Notification"/>
+        android:hint="New Exercise Name"/>
 
     <Button
-        android:id="@+id/acceptNewPlanButton"
+        android:id="@+id/acceptNewExerciseButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Create Plan"/>
+        android:text="Create Exercise"/>
 </LinearLayout>

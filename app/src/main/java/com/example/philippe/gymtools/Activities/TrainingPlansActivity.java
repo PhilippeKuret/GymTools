@@ -68,7 +68,8 @@ public class TrainingPlansActivity extends AppCompatActivity implements
 		trainingPlansPresenter.setDatabase(this);
 		trainingPlansPresenter.getTrainingPlans();
 
-		newPlanButton.setOnClickListener(v -> {
+		newPlanButton.setOnClickListener(v ->
+		{
 			FragmentManager fm = getSupportFragmentManager();
 			CreateTrainingPlanDialogFragment createTrainingPlanDialogFragment = new CreateTrainingPlanDialogFragment();
 			createTrainingPlanDialogFragment.show(fm, "create_training_plan");
