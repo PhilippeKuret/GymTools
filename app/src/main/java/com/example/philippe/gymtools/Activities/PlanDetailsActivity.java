@@ -10,24 +10,31 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.philippe.gymtools.Activities.Adapters.WorkoutPlanAdapter;
+import com.example.philippe.gymtools.Activities.Adapters.PlanDetailsAdapter;
 import com.example.philippe.gymtools.Activities.ViewInterface.PlanDetailsView;
 import com.example.philippe.gymtools.App.GymToolsApplication;
 import com.example.philippe.gymtools.Fragments.CreateExerciseDialogFragment;
 import com.example.philippe.gymtools.Module.AppDatabase;
+import com.example.philippe.gymtools.Objects.Exercise;
 import com.example.philippe.gymtools.Objects.TrainingPlan;
 import com.example.philippe.gymtools.Presenter.PresenterInterface.PlanDetailsInterface;
 import com.example.philippe.gymtools.R;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PlanDetailsActivity extends AppCompatActivity implements PlanDetailsView, CreateExerciseDialogFragment.OnExerciseCreatedListener
+public class PlanDetailsActivity extends AppCompatActivity implements
+		PlanDetailsView,
+		CreateExerciseDialogFragment.OnExerciseCreatedListener,
+		PlanDetailsAdapter.onButtonClickFunction,
+		PlanDetailsAdapter.OnItemClickListener
 {
 	@BindView(R.id.ExerciseList)
-	RecyclerView exercises;
+	RecyclerView exerciseRecyclerView;
 
 	@BindView(R.id.planName)
 	TextView planName;
@@ -38,7 +45,7 @@ public class PlanDetailsActivity extends AppCompatActivity implements PlanDetail
 	@Inject
 	PlanDetailsInterface planDetailsPresenter;
 
-	private WorkoutPlanAdapter adapter;
+	private PlanDetailsAdapter adapter;
 
 	private TrainingPlan selectedTrainingPlan;
 
@@ -53,7 +60,7 @@ public class PlanDetailsActivity extends AppCompatActivity implements PlanDetail
 				.getAppComponent()
 				.inject(this);
 
-		exercises.setLayoutManager(new LinearLayoutManager(this));
+		exerciseRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 		if(getIntent().hasExtra("plan"))
 		{
@@ -85,7 +92,28 @@ public class PlanDetailsActivity extends AppCompatActivity implements PlanDetail
 	@Override
 	public void OnExercisePlanCreated(String name)
 	{
+		planDetailsPresenter.createExercise(name, selectedTrainingPlan.getId());
+		exerciseRecyclerView.setAdapter(null);
+		planDetailsPresenter.getExercises(selectedTrainingPlan.getId());
+	}
 
+
+	@Override
+	public void onListItemDeleteButtonClick(Exercise exercise)
+	{
+
+	}
+
+	@Override
+	public void onListItemClick(Exercise exercise)
+	{
+
+	}
+
+	public void setExercisesInView(List<Exercise> exercises)
+	{
+		adapter = new PlanDetailsAdapter(PlanDetailsActivity.this, exercises);
+		exerciseRecyclerView.setAdapter(adapter);
 	}
 
 	public static Intent createIntent(Context context, TrainingPlan plan)

@@ -33,7 +33,7 @@ public class TrainingPlansActivity extends AppCompatActivity implements
 {
 
 	@BindView(R.id.completePlanList)
-	RecyclerView plans;
+	RecyclerView plansRecyclerView;
 
 	@BindView(R.id.newPlanButton)
 	Button newPlanButton;
@@ -62,7 +62,7 @@ public class TrainingPlansActivity extends AppCompatActivity implements
 			selectedTrainingPlan = data.getParcelable("plan");
 		}
 
-		plans.setLayoutManager(new LinearLayoutManager(this));
+		plansRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 		trainingPlansPresenter.setView(this);
 		trainingPlansPresenter.setDatabase(this);
@@ -86,14 +86,14 @@ public class TrainingPlansActivity extends AppCompatActivity implements
 	public void setSelectedPlansInView(List<TrainingPlan> trainingPlans)
 	{
 		adapter = new WorkoutPlanAdapter(TrainingPlansActivity.this, trainingPlans);
-		plans.setAdapter(adapter);
+		plansRecyclerView.setAdapter(adapter);
 	}
 
 	@Override
 	public void OnPlanCreated(String name, Boolean isShown)
 	{
 		trainingPlansPresenter.createTrainingPlan(name, isShown);
-		plans.setAdapter(null);
+		plansRecyclerView.setAdapter(null);
 		trainingPlansPresenter.getTrainingPlans();
 	}
 
@@ -112,7 +112,7 @@ public class TrainingPlansActivity extends AppCompatActivity implements
 	public void onListItemDeleteButtonClick(TrainingPlan trainingPlan)
 	{
 		trainingPlansPresenter.deleteTrainingPlan(trainingPlan);
-		plans.setAdapter(null);
+		plansRecyclerView.setAdapter(null);
 		trainingPlansPresenter.getTrainingPlans();
 	}
 

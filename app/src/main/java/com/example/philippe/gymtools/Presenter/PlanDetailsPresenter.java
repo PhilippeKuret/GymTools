@@ -35,6 +35,7 @@ public class PlanDetailsPresenter implements PlanDetailsInterface
 			@Override
 			public void onSuccess(List<Exercise> exercises)
 			{
+				planDetailsView.setExercisesInView(exercises);
 				dispose();
 			}
 

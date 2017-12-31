@@ -50,8 +50,8 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
 	@Override
 	public void onBindViewHolder(WorkoutPlanAdapter.ViewHolder holder, int position)
 	{
-
 		OnItemClickListener itemClickListener = (OnItemClickListener) context;
+		onButtonClickFunction buttonClickListener = (onButtonClickFunction) context;
 
 		holder.setOnClickListener(trainingPlans.get(position), itemClickListener);
 
@@ -65,15 +65,10 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
 			holder.planIsShow.setText("false");
 
 		holder.planListNavigationButton.setOnClickListener(v ->
-		{
-			onButtonClickFunction buttonClickListener = (onButtonClickFunction) context;
-			buttonClickListener.onListItemSwitchButtonClick(trainingPlans.get(position));
-		});
+				buttonClickListener.onListItemSwitchButtonClick(trainingPlans.get(position)));
 
-		holder.deletePlanButton.setOnClickListener(v -> {
-			onButtonClickFunction buttonClickListener = (onButtonClickFunction) context;
-			buttonClickListener.onListItemDeleteButtonClick(trainingPlans.get(position));
-		});
+		holder.deletePlanButton.setOnClickListener(v ->
+				buttonClickListener.onListItemDeleteButtonClick(trainingPlans.get(position)));
 	}
 
 	@Override
@@ -105,7 +100,7 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
 			ButterKnife.bind(this, itemView);
 		}
 
-		public void setOnClickListener(TrainingPlan trainingPlan, OnItemClickListener listener)
+		public void setOnClickListener(TrainingPlan trainingPlan, WorkoutPlanAdapter.OnItemClickListener listener)
 		{
 			itemView.setOnClickListener(v -> listener.onListItemClick(trainingPlan));
 		}

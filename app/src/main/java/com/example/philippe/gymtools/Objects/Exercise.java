@@ -56,7 +56,6 @@ public class Exercise implements Parcelable
 		this.Name = name;
 	}
 
-
 	public int getPlanId()
 	{
 		return planId;
