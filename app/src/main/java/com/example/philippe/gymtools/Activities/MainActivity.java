@@ -13,6 +13,7 @@ import com.example.philippe.gymtools.Utils.MathTools;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/*LEGACY CODE, CHANGE ALL*/
 public class MainActivity extends AppCompatActivity
 {
 

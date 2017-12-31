@@ -1,5 +1,7 @@
 package com.example.philippe.gymtools.Activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +14,6 @@ import com.example.philippe.gymtools.App.GymToolsApplication;
 import com.example.philippe.gymtools.Module.AppDatabase;
 import com.example.philippe.gymtools.Objects.TrainingPlan;
 import com.example.philippe.gymtools.Presenter.PresenterInterface.PlanDetailsInterface;
-import com.example.philippe.gymtools.Presenter.PresenterInterface.TrainingPlansInterface;
 import com.example.philippe.gymtools.R;
 
 import javax.inject.Inject;
@@ -48,6 +49,12 @@ public class PlanDetailsActivity extends AppCompatActivity implements PlanDetail
 
 		exercises.setLayoutManager(new LinearLayoutManager(this));
 
+		if(getIntent().hasExtra("plan"))
+		{
+			Bundle data = getIntent().getExtras();
+			selectedTrainingPlan = data.getParcelable("plan");
+		}
+
 		planDetailsPresenter.setView(this);
 		planDetailsPresenter.setDatabase(this);
 		planDetailsPresenter.getExercises(selectedTrainingPlan.getId());
@@ -58,5 +65,12 @@ public class PlanDetailsActivity extends AppCompatActivity implements PlanDetail
 	{
 		super.onDestroy();
 		AppDatabase.destroyInstance();
+	}
+
+	public static Intent createIntent(Context context, TrainingPlan plan)
+	{
+		Intent intent = new Intent(context, PlanDetailsActivity.class);
+		intent.putExtra("plan", plan);
+		return intent;
 	}
 }

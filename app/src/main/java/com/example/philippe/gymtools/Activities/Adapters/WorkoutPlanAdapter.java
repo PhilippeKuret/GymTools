@@ -30,8 +30,13 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
 
 	public interface onButtonClickFunction
 	{
-		void onListItemButtonClick(TrainingPlan trainingPlan);
-		void deleteListItemButtonClick(TrainingPlan trainingPlan);
+		void onListItemSwitchButtonClick(TrainingPlan trainingPlan);
+		void onListItemDeleteButtonClick(TrainingPlan trainingPlan);
+	}
+
+	public interface OnItemClickListener
+	{
+		void onListItemClick(TrainingPlan trainingPlan);
 	}
 
 	@Override
@@ -45,8 +50,15 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
 	@Override
 	public void onBindViewHolder(WorkoutPlanAdapter.ViewHolder holder, int position)
 	{
+
+		OnItemClickListener itemClickListener = (OnItemClickListener) context;
+
+		holder.setOnClickListener(trainingPlans.get(position), itemClickListener);
+
 		holder.planName.setText(trainingPlans.get(position).getName());
+
 		holder.planId.setText(String.valueOf(trainingPlans.get(position).getId()));
+
 		if(trainingPlans.get(position).getIsDisplayedPlan())
 			holder.planIsShow.setText("true");
 		else
@@ -54,13 +66,13 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
 
 		holder.planListNavigationButton.setOnClickListener(v ->
 		{
-			onButtonClickFunction listener = (onButtonClickFunction) context;
-			listener.onListItemButtonClick(trainingPlans.get(position));
+			onButtonClickFunction buttonClickListener = (onButtonClickFunction) context;
+			buttonClickListener.onListItemSwitchButtonClick(trainingPlans.get(position));
 		});
 
 		holder.deletePlanButton.setOnClickListener(v -> {
-			onButtonClickFunction listener = (onButtonClickFunction) context;
-			listener.deleteListItemButtonClick(trainingPlans.get(position));
+			onButtonClickFunction buttonClickListener = (onButtonClickFunction) context;
+			buttonClickListener.onListItemDeleteButtonClick(trainingPlans.get(position));
 		});
 	}
 
@@ -91,6 +103,11 @@ public class WorkoutPlanAdapter extends RecyclerView.Adapter<WorkoutPlanAdapter.
 		{
 			super(itemView);
 			ButterKnife.bind(this, itemView);
+		}
+
+		public void setOnClickListener(TrainingPlan trainingPlan, OnItemClickListener listener)
+		{
+			itemView.setOnClickListener(v -> listener.onListItemClick(trainingPlan));
 		}
 	}
 }

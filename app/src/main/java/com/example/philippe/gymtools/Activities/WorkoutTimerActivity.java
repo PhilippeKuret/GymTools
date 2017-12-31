@@ -20,6 +20,7 @@ import com.example.philippe.gymtools.Utils.MathTools;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/*LEGACY CODE, CHANGE ALL*/
 public class WorkoutTimerActivity extends AppCompatActivity implements CustomTimeDialogFragment.OnTimeSelectedListener
 {
 	@BindView(R.id.restTimer)

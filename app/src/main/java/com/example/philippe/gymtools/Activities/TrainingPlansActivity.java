@@ -25,7 +25,11 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TrainingPlansActivity extends AppCompatActivity implements TrainingPlansView, CreateTrainingPlanDialogFragment.OnPlanCreatedListener, WorkoutPlanAdapter.onButtonClickFunction
+public class TrainingPlansActivity extends AppCompatActivity implements
+		TrainingPlansView,
+		CreateTrainingPlanDialogFragment.OnPlanCreatedListener,
+		WorkoutPlanAdapter.onButtonClickFunction,
+		WorkoutPlanAdapter.OnItemClickListener
 {
 
 	@BindView(R.id.completePlanList)
@@ -52,8 +56,11 @@ public class TrainingPlansActivity extends AppCompatActivity implements Training
 				.getAppComponent()
 				.inject(this);
 
-		Bundle data = getIntent().getExtras();
-		selectedTrainingPlan = data.getParcelable("plan");
+		if(getIntent().hasExtra("plan"))
+		{
+			Bundle data = getIntent().getExtras();
+			selectedTrainingPlan = data.getParcelable("plan");
+		}
 
 		plans.setLayoutManager(new LinearLayoutManager(this));
 
@@ -89,9 +96,9 @@ public class TrainingPlansActivity extends AppCompatActivity implements Training
 		trainingPlansPresenter.getTrainingPlans();
 	}
 
-	//UPDATE ON SWITCH
+	//UPDATE ON SWITCHING TRAINING PLAN
 	@Override
-	public void onListItemButtonClick(TrainingPlan trainingPlan)
+	public void onListItemSwitchButtonClick(TrainingPlan trainingPlan)
 	{
 		trainingPlan.setIsDisplayedPlan(true);
 		selectedTrainingPlan.setIsDisplayedPlan(false);
@@ -101,11 +108,18 @@ public class TrainingPlansActivity extends AppCompatActivity implements Training
 	}
 
 	@Override
-	public void deleteListItemButtonClick(TrainingPlan trainingPlan)
+	public void onListItemDeleteButtonClick(TrainingPlan trainingPlan)
 	{
 		trainingPlansPresenter.deleteTrainingPlan(trainingPlan);
 		plans.setAdapter(null);
 		trainingPlansPresenter.getTrainingPlans();
+	}
+
+	@Override
+	public void onListItemClick(TrainingPlan trainingPlan)
+	{
+		Intent intent = PlanDetailsActivity.createIntent(this, trainingPlan);
+		this.startActivity(intent);
 	}
 
 	public static Intent createIntent(Context context, TrainingPlan plan)

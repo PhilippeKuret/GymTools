@@ -21,7 +21,10 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class WorkoutPlanActivity extends AppCompatActivity implements WorkoutPlanView, WorkoutPlanAdapter.onButtonClickFunction
+public class WorkoutPlanActivity extends AppCompatActivity implements
+		WorkoutPlanView,
+		WorkoutPlanAdapter.onButtonClickFunction,
+		WorkoutPlanAdapter.OnItemClickListener
 {
 	@BindView(R.id.selectedPlanList)
 	RecyclerView displayedPlans;
@@ -70,17 +73,24 @@ public class WorkoutPlanActivity extends AppCompatActivity implements WorkoutPla
 	}
 
 	@Override
-	public void onListItemButtonClick(TrainingPlan trainingPlan)
+	public void onListItemSwitchButtonClick(TrainingPlan trainingPlan)
 	{
 		Intent intent = TrainingPlansActivity.createIntent(this, trainingPlan);
 		this.startActivity(intent);
 	}
 
 	@Override
-	public void deleteListItemButtonClick(TrainingPlan trainingPlan)
+	public void onListItemDeleteButtonClick(TrainingPlan trainingPlan)
 	{
 		workoutPlanPresenter.deleteTrainingPlan(trainingPlan);
 		displayedPlans.setAdapter(null);
 		workoutPlanPresenter.getDisplayedTrainingPlans();
+	}
+
+	@Override
+	public void onListItemClick(TrainingPlan trainingPlan)
+	{
+		Intent intent = PlanDetailsActivity.createIntent(this, trainingPlan);
+		this.startActivity(intent);
 	}
 }
