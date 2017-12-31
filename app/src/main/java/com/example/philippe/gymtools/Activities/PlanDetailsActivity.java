@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.philippe.gymtools.Activities.Adapters.WorkoutPlanAdapter;
 import com.example.philippe.gymtools.Activities.ViewInterface.PlanDetailsView;
@@ -25,6 +26,9 @@ public class PlanDetailsActivity extends AppCompatActivity implements PlanDetail
 {
 	@BindView(R.id.ExerciseList)
 	RecyclerView exercises;
+
+	@BindView(R.id.planName)
+	TextView planName;
 
 	@BindView(R.id.newExerciseButton)
 	Button newExerciseButton;
@@ -54,6 +58,8 @@ public class PlanDetailsActivity extends AppCompatActivity implements PlanDetail
 			Bundle data = getIntent().getExtras();
 			selectedTrainingPlan = data.getParcelable("plan");
 		}
+
+		planName.setText(selectedTrainingPlan.getName());
 
 		planDetailsPresenter.setView(this);
 		planDetailsPresenter.setDatabase(this);
