@@ -9,7 +9,7 @@ import android.os.Parcelable;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
-@Entity(tableName = "exercise", foreignKeys = @ForeignKey(entity =
+@Entity(tableName = "workout", foreignKeys = @ForeignKey(entity =
 															Exercise.class,
 															onDelete = CASCADE,
 															parentColumns = "id",
