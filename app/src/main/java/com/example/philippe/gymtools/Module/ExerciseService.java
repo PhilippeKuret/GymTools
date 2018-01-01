@@ -38,7 +38,7 @@ public class ExerciseService implements ExerciseServiceInterface
 	public Single<Object> deleteExercise(Exercise exercise)
 	{
 		return Single.fromObservable(observer -> {
-			appDatabase.exerciseDao().deleteExervice(exercise);
+			appDatabase.exerciseDao().deleteExercise(exercise);
 		})
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread());

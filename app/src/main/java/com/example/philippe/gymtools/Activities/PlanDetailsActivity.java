@@ -101,7 +101,9 @@ public class PlanDetailsActivity extends AppCompatActivity implements
 	@Override
 	public void onListItemDeleteButtonClick(Exercise exercise)
 	{
-
+		planDetailsPresenter.deleteExercise(exercise);
+		exerciseRecyclerView.setAdapter(null);
+		planDetailsPresenter.getExercises(selectedTrainingPlan.getId());
 	}
 
 	@Override

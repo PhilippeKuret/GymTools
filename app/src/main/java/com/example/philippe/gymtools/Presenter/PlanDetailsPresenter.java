@@ -66,4 +66,23 @@ public class PlanDetailsPresenter implements PlanDetailsInterface
 			}
 		});
 	}
+
+	public void deleteExercise(Exercise exercise)
+	{
+		db.deleteExercise(exercise).subscribeWith(new DisposableSingleObserver<Object>()
+		{
+			@Override
+			public void onSuccess(Object o)
+			{
+				dispose();
+			}
+
+			@Override
+			public void onError(Throwable e)
+			{
+				e.printStackTrace();
+				dispose();
+			}
+		});
+	}
 }

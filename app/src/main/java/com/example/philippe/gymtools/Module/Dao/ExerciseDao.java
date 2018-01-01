@@ -18,7 +18,7 @@ public interface ExerciseDao
 	void insertExercise(Exercise exercise);
 
 	@Delete
-	void deleteExervice(Exercise exercise);
+	void deleteExercise(Exercise exercise);
 
 	@Query("SELECT * FROM exercise WHERE plan_id = :trainingPlan_id")
 	Single<List<Exercise>> getExercises(int trainingPlan_id);
