@@ -14,13 +14,13 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 															onDelete = CASCADE,
 															parentColumns = "id",
 															childColumns = "exercise_id"))
-public class Set implements Parcelable
+public class Workout implements Parcelable
 {
-	public Set()
+	public Workout()
 	{
 	}
 
-	public Set(int id, String name, double weight,int exerciseId)
+	public Workout(int id, String name, double weight,int exerciseId)
 	{
 		Id = id;
 		Name = name;
@@ -70,17 +70,17 @@ public class Set implements Parcelable
 		Weight = weight;
 	}
 
-	public int getPlanId()
+	public int getExerciseId()
 	{
 		return exerciseId;
 	}
 
-	public void setPlanId(int exerciseId)
+	public void setExerciseId(int exerciseId)
 	{
 		this.exerciseId = exerciseId;
 	}
 
-	protected Set(Parcel in)
+	protected Workout(Parcel in)
 	{
 		Id = in.readInt();
 		Name = in.readString();
@@ -103,18 +103,18 @@ public class Set implements Parcelable
 		dest.writeInt(exerciseId);
 	}
 
-	public static final Creator<Set> CREATOR = new Creator<Set>()
+	public static final Creator<Workout> CREATOR = new Creator<Workout>()
 	{
 		@Override
-		public Set createFromParcel(Parcel in)
+		public Workout createFromParcel(Parcel in)
 		{
-			return new Set(in);
+			return new Workout(in);
 		}
 
 		@Override
-		public Set[] newArray(int size)
+		public Workout[] newArray(int size)
 		{
-			return new Set[size];
+			return new Workout[size];
 		}
 	};
 }

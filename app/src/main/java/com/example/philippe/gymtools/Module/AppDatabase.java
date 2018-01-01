@@ -7,15 +7,19 @@ import android.content.Context;
 
 import com.example.philippe.gymtools.Module.Dao.ExerciseDao;
 import com.example.philippe.gymtools.Module.Dao.TrainingPlanDao;
+import com.example.philippe.gymtools.Module.Dao.WorkoutDao;
 import com.example.philippe.gymtools.Objects.Exercise;
 import com.example.philippe.gymtools.Objects.TrainingPlan;
+import com.example.philippe.gymtools.Objects.Workout;
 
-@Database(entities = {TrainingPlan.class, Exercise.class}, version = 1)
+@Database(entities = {TrainingPlan.class, Exercise.class, Workout.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase
 {
 	public abstract TrainingPlanDao trainingPlanDao();
 
 	public abstract ExerciseDao exerciseDao();
+
+	public abstract WorkoutDao workoutDao();
 
 	private static AppDatabase INSTANCE;
 
