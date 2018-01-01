@@ -20,6 +20,6 @@ public interface WorkoutDao
 	@Delete
 	void deleteWorkout(Workout set);
 
-	@Query("SELECT * FROM  WHERE exercise_id = :exerciseId")
+	@Query("SELECT * FROM workout WHERE exercise_id = :exerciseId")
 	Single<List<Workout>> getWorkout(int exerciseId);
 }
