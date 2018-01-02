@@ -10,7 +10,7 @@ import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class WorkoutService
+public class WorkoutService implements WorkoutServiceInterface
 {
 	private final AppDatabase appDatabase;
 
