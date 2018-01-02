@@ -5,12 +5,13 @@ import android.content.Context;
 import com.example.philippe.gymtools.Module.WorkoutService;
 import com.example.philippe.gymtools.Module.WorkoutServiceInterface;
 import com.example.philippe.gymtools.Objects.Workout;
+import com.example.philippe.gymtools.Presenter.PresenterInterface.ExerciseDetailsInterface;
 
 import java.util.List;
 
 import io.reactivex.observers.DisposableSingleObserver;
 
-public class ExerciseDetailsPresenter
+public class ExerciseDetailsPresenter implements ExerciseDetailsInterface
 {
 	private WorkoutServiceInterface db;
 
