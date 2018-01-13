@@ -3,6 +3,7 @@ package com.example.philippe.gymtools.DI;
 import com.example.philippe.gymtools.Activities.PlanDetailsActivity;
 import com.example.philippe.gymtools.Activities.TrainingPlansActivity;
 import com.example.philippe.gymtools.Activities.WorkoutPlanActivity;
+import com.example.philippe.gymtools.Fragments.ExerciseDetailsDialogFragment;
 
 import javax.inject.Singleton;
 
@@ -18,4 +19,6 @@ public interface AppComponent {
 	void inject(TrainingPlansActivity target);
 
 	void inject(PlanDetailsActivity target);
+
+	void inject(ExerciseDetailsDialogFragment target);
 }

@@ -4,6 +4,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import com.example.philippe.gymtools.Objects.Workout;
 
@@ -19,6 +20,9 @@ public interface WorkoutDao
 
 	@Delete
 	void deleteWorkout(Workout set);
+
+	@Update
+	void updateMultipleWorkouts(List<Workout> workouts);
 
 	@Query("SELECT * FROM workout WHERE exercise_id = :exerciseId")
 	Single<List<Workout>> getWorkout(int exerciseId);

@@ -6,6 +6,9 @@ import com.example.philippe.gymtools.Objects.Workout;
 
 import java.util.List;
 
+import javax.inject.Singleton;
+
+import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -39,6 +42,15 @@ public class WorkoutService implements WorkoutServiceInterface
 	{
 		return Single.fromObservable(observer -> {
 			appDatabase.workoutDao().deleteWorkout(workout);
+		})
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread());
+	}
+
+	public Single<Object> updateMultipleWorkouts(List<Workout> workouts)
+	{
+		return Single.fromObservable(observer -> {
+			appDatabase.workoutDao().updateMultipleWorkouts(workouts);
 		})
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread());

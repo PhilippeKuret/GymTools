@@ -13,4 +13,6 @@ public interface WorkoutServiceInterface
 	Single<Object> createWorkout(Workout workout);
 
 	Single<Object> deleteWorkout(Workout workout);
+
+	Single<Object> updateMultipleWorkouts(List<Workout> workouts);
 }

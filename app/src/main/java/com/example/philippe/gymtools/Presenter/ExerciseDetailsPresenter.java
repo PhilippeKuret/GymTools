@@ -2,6 +2,7 @@ package com.example.philippe.gymtools.Presenter;
 
 import android.content.Context;
 
+import com.example.philippe.gymtools.Fragments.FragmentInterface.ExerciseDetailsFragmentView;
 import com.example.philippe.gymtools.Module.WorkoutService;
 import com.example.philippe.gymtools.Module.WorkoutServiceInterface;
 import com.example.philippe.gymtools.Objects.Workout;
@@ -15,10 +16,14 @@ public class ExerciseDetailsPresenter implements ExerciseDetailsInterface
 {
 	private WorkoutServiceInterface db;
 
+	private ExerciseDetailsFragmentView view;
+
 	public void setDatabase(Context context)
 	{
 		db = new WorkoutService(context);
 	}
+
+	public void setView(ExerciseDetailsFragmentView exerciseDetailsFragmentView) {view = exerciseDetailsFragmentView; }
 
 	public void getWorkouts(int exerciseId)
 	{
@@ -27,6 +32,7 @@ public class ExerciseDetailsPresenter implements ExerciseDetailsInterface
 			@Override
 			public void onSuccess(List<Workout> workouts)
 			{
+				view.setWorkoutsInView(workouts);
 				dispose();
 			}
 
@@ -39,9 +45,9 @@ public class ExerciseDetailsPresenter implements ExerciseDetailsInterface
 		});
 	}
 
-	public void addWorkout(String name, double weight, int exerciseId)
+	public void addWorkout(Workout workout)
 	{
-		db.createWorkout(new Workout(0, name, weight, exerciseId)).subscribeWith(new DisposableSingleObserver<Object>()
+		db.createWorkout(workout).subscribeWith(new DisposableSingleObserver<Object>()
 		{
 			@Override
 			public void onSuccess(Object o)
@@ -61,6 +67,25 @@ public class ExerciseDetailsPresenter implements ExerciseDetailsInterface
 	public void deleteWorkout(Workout workout)
 	{
 		db.deleteWorkout(workout).subscribeWith(new DisposableSingleObserver<Object>()
+		{
+			@Override
+			public void onSuccess(Object o)
+			{
+				dispose();
+			}
+
+			@Override
+			public void onError(Throwable e)
+			{
+				e.printStackTrace();
+				dispose();
+			}
+		});
+	}
+
+	public void updateMultipleWorkouts(List<Workout> workouts)
+	{
+		db.updateMultipleWorkouts(workouts).subscribeWith(new DisposableSingleObserver<Object>()
 		{
 			@Override
 			public void onSuccess(Object o)
