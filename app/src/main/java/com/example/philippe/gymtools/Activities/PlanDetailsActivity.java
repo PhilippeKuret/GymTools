@@ -14,6 +14,7 @@ import com.example.philippe.gymtools.Activities.Adapters.PlanDetailsAdapter;
 import com.example.philippe.gymtools.Activities.ViewInterface.PlanDetailsView;
 import com.example.philippe.gymtools.App.GymToolsApplication;
 import com.example.philippe.gymtools.Fragments.CreateExerciseDialogFragment;
+import com.example.philippe.gymtools.Fragments.ExerciseDetailsDialogFragment;
 import com.example.philippe.gymtools.Module.AppDatabase;
 import com.example.philippe.gymtools.Objects.Exercise;
 import com.example.philippe.gymtools.Objects.TrainingPlan;
@@ -109,7 +110,10 @@ public class PlanDetailsActivity extends AppCompatActivity implements
 	@Override
 	public void onListItemClick(Exercise exercise)
 	{
-
+		FragmentManager fm = getSupportFragmentManager();
+		ExerciseDetailsDialogFragment exerciseDetailsDialogFragment = new ExerciseDetailsDialogFragment();
+		exerciseDetailsDialogFragment.createBundle(exercise);
+		exerciseDetailsDialogFragment.show(fm, "exercise_details");
 	}
 
 	public void setExercisesInView(List<Exercise> exercises)
