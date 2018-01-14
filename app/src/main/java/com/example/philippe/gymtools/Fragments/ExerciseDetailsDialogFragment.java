@@ -119,7 +119,8 @@ public class ExerciseDetailsDialogFragment extends DialogFragment implements Exe
 	public void onDismiss(DialogInterface dialog)
 	{
 		super.onDismiss(dialog);
-		exerciseDetailsPresenter.updateMultipleWorkouts(adapter.getWorkouts());
+		List<Workout> update = adapter.getUpdatedWorkouts();
+		exerciseDetailsPresenter.updateMultipleWorkouts(update);
 	}
 
 	@Override

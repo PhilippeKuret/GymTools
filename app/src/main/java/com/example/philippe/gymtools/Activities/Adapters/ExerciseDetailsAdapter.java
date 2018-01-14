@@ -3,6 +3,9 @@ package com.example.philippe.gymtools.Activities.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,7 @@ import com.example.philippe.gymtools.Fragments.ExerciseDetailsDialogFragment;
 import com.example.philippe.gymtools.Objects.Workout;
 import com.example.philippe.gymtools.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -24,6 +28,8 @@ public class ExerciseDetailsAdapter extends RecyclerView.Adapter<ExerciseDetails
 	private Context context;
 
 	private List<Workout> workouts;
+
+	private List<Workout> updatedWorkouts = new ArrayList<>();
 
 	public ExerciseDetailsAdapter(Context context, List<Workout> workouts)
 	{
@@ -47,13 +53,23 @@ public class ExerciseDetailsAdapter extends RecyclerView.Adapter<ExerciseDetails
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position)
 	{
-		ExerciseDetailsAdapter.onButtonClickFunction buttonClickListener =  (ExerciseDetailsAdapter.onButtonClickFunction) new ExerciseDetailsDialogFragment().getContext();
+		ExerciseDetailsAdapter.onButtonClickFunction buttonClickListener = (ExerciseDetailsAdapter.onButtonClickFunction) new ExerciseDetailsDialogFragment();
 
 		holder.workoutName.setText(workouts.get(position).getName());
 
 		holder.workoutId.setText(String.valueOf(workouts.get(position).getId()));
 
 		holder.workoutWeight.setText(String.valueOf(workouts.get(position).getWeight()));
+
+		holder.workoutWeight.setOnFocusChangeListener((view, b) ->
+		{
+			if(!b)
+			{
+				Workout w = workouts.get(position);
+				w.setWeight(Double.parseDouble(holder.workoutWeight.getText().toString()));
+				updatedWorkouts.add(w);
+			}
+		});
 
 		holder.deleteWorkoutButton.setOnClickListener(v -> buttonClickListener.onListItemDeleteButtonClick(workouts.get(position)));
 	}
@@ -64,15 +80,15 @@ public class ExerciseDetailsAdapter extends RecyclerView.Adapter<ExerciseDetails
 		return workouts.size();
 	}
 
+	public List<Workout> getUpdatedWorkouts()
+	{
+		return updatedWorkouts;
+	}
+
 	public void addNewWorkout(Workout workout)
 	{
 		workouts.add(workout);
 		this.notifyDataSetChanged();
-	}
-
-	public List<Workout> getWorkouts()
-	{
-		return workouts;
 	}
 
 	class ViewHolder extends RecyclerView.ViewHolder
