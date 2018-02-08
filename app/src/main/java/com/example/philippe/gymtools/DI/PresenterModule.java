@@ -1,8 +1,10 @@
 package com.example.philippe.gymtools.DI;
 
 import com.example.philippe.gymtools.Presenter.ExerciseDetailsPresenter;
+import com.example.philippe.gymtools.Presenter.NotificationPresenter;
 import com.example.philippe.gymtools.Presenter.PlanDetailsPresenter;
 import com.example.philippe.gymtools.Presenter.PresenterInterface.ExerciseDetailsInterface;
+import com.example.philippe.gymtools.Presenter.PresenterInterface.NotificationInterface;
 import com.example.philippe.gymtools.Presenter.PresenterInterface.PlanDetailsInterface;
 import com.example.philippe.gymtools.Presenter.PresenterInterface.TrainingPlansInterface;
 import com.example.philippe.gymtools.Presenter.PresenterInterface.WorkoutPlanInterface;
@@ -34,4 +36,8 @@ class PresenterModule {
 	@Provides
 	@Singleton
 	ExerciseDetailsInterface provideExerciseDetailsInterface() { return new ExerciseDetailsPresenter(); }
+
+	@Provides
+	@Singleton
+	NotificationInterface provideNotificationInterface() { return new NotificationPresenter(); }
 }

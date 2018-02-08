@@ -36,27 +36,21 @@ public class TrainingPlanService implements TrainingPlanServiceInterface
 
 	public Single<Object> createTrainingPlan(TrainingPlan trainingPlan)
 	{
-		return Single.fromObservable(observer ->
-				appDatabase.trainingPlanDao().insertTrainingPlan(trainingPlan)
-		)
+		return Single.fromObservable(observer -> appDatabase.trainingPlanDao().insertTrainingPlan(trainingPlan))
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread());
 	}
 
 	public Single<Object> deleteTrainingPlan(TrainingPlan trainingPlan)
 	{
-		return Single.fromObservable(observer -> {
-			appDatabase.trainingPlanDao().deleteTrainingPlan(trainingPlan);
-		})
+		return Single.fromObservable(observer -> appDatabase.trainingPlanDao().deleteTrainingPlan(trainingPlan))
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread());
 	}
 
 	public Single<Object> updateMultipleTrainingPlans(TrainingPlan... trainingPlans)
 	{
-		return Single.fromObservable(observer -> {
-			appDatabase.trainingPlanDao().updateMultipleTrainingPlans(trainingPlans);
-		})
+		return Single.fromObservable(observer -> appDatabase.trainingPlanDao().updateMultipleTrainingPlans(trainingPlans))
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread());
 	}

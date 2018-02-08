@@ -22,7 +22,10 @@ public interface WorkoutDao
 	void deleteWorkout(Workout set);
 
 	@Update
-	void updateMultipleWorkouts(List<Workout> workouts);
+	void updateMultipleWorkouts(Workout... workouts);
+
+	@Update
+	void updateWorkout(Workout workout);
 
 	@Query("SELECT * FROM workout WHERE exercise_id = :exerciseId")
 	Single<List<Workout>> getWorkout(int exerciseId);

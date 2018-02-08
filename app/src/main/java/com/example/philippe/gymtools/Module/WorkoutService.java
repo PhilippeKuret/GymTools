@@ -47,6 +47,15 @@ public class WorkoutService implements WorkoutServiceInterface
 				.observeOn(AndroidSchedulers.mainThread());
 	}
 
+	public Single<Object> updateWorkout(Workout workout)
+	{
+		return Single.fromObservable(observer -> {
+			appDatabase.workoutDao().updateWorkout(workout);
+		})
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread());
+	}
+
 	public Single<Object> updateMultipleWorkouts(List<Workout> workouts)
 	{
 		return Single.fromObservable(observer -> {

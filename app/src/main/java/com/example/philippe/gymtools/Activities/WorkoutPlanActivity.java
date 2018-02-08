@@ -1,5 +1,6 @@
 package com.example.philippe.gymtools.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -92,5 +93,11 @@ public class WorkoutPlanActivity extends AppCompatActivity implements
 	{
 		Intent intent = PlanDetailsActivity.createIntent(this, trainingPlan);
 		this.startActivity(intent);
+	}
+
+	public static Intent createIntent(Context context)
+	{
+		Intent intent = new Intent(context, WorkoutPlanActivity.class);
+		return intent;
 	}
 }

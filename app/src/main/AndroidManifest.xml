@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.philippe.gymtools">
+    package="com.example.philippe.gymtools">
 
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".App.GymToolsApplication"
@@ -16,19 +16,37 @@
             android:name=".Activities.MainActivity"
             android:label="@string/title_activity_main">
         </activity>
-        <activity android:name=".Activities.WorkoutTimerActivity">
+        <activity
+            android:name=".Activities.WorkoutTimerActivity">
         </activity>
-        <activity android:name=".Activities.WorkoutPlanActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+        <activity
+            android:name=".Activities.WorkoutPlanActivity">
+        </activity>
+        <activity
+            android:name=".Activities.TrainingPlansActivity">
+        </activity>
+        <activity
+            android:name=".Activities.PlanDetailsActivity">
+        </activity>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+        <service
+            android:name=".Notification.TrainingPlanNotification"
+            android:exported="false">
+        </service>
+        <service
+            android:name=".Notification.ExerciseWorkoutNotification"
+            android:exported="false">
+        </service>
+
+        <activity
+            android:name=".Activities.StartingActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.TrainingPlansActivity">
-        </activity>
-        <activity android:name=".Activities.PlanDetailsActivity">
-        </activity>
+
     </application>
 
 </manifest>
