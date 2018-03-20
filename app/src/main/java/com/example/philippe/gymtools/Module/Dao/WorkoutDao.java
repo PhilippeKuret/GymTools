@@ -22,7 +22,7 @@ public interface WorkoutDao
 	void deleteWorkout(Workout set);
 
 	@Update
-	void updateMultipleWorkouts(Workout... workouts);
+	void updateMultipleWorkouts(List<Workout> workouts);
 
 	@Update
 	void updateWorkout(Workout workout);

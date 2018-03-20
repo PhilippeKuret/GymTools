@@ -88,7 +88,6 @@ public class NotificationPresenter implements NotificationInterface
 					singleList.add(workoutService.getWorkouts(exercise.getId()));
 				}
 
-
 				getNotificationWorkouts(singleList, trainingPlan, map);
 				dispose();
 			}
@@ -106,7 +105,6 @@ public class NotificationPresenter implements NotificationInterface
 	{
 		workoutService.updateMultipleWorkouts(workouts)
 				.subscribe();
-
 	}
 
 	private void getNotificationWorkouts(List<Single<List<Workout>>> exercise, TrainingPlan trainingPlan, HashMap<Integer, String> map)
