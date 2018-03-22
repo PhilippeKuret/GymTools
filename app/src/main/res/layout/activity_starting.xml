@@ -5,15 +5,16 @@
     android:layout_width="match_parent">
 
     <Button
-        android:id="@+id/weightInputButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Go to Weight Input"/>
-
-    <Button
         android:id="@+id/notificationButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
         android:text="Notification"/>
+
+    <Button
+        android:id="@+id/weightInputButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:text="Go to Weight Input"
+        style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"/>
 </LinearLayout>
